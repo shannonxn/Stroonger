@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stroonger.iml" filepath="$PROJECT_DIR$/.idea/modules/stroonger.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stroonger_main.iml" filepath="$PROJECT_DIR$/.idea/modules/stroonger_main.iml" group="stroonger" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stroonger_test.iml" filepath="$PROJECT_DIR$/.idea/modules/stroonger_test.iml" group="stroonger" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app17.iml" filepath="$PROJECT_DIR$/.idea/modules/app17.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app17_main.iml" filepath="$PROJECT_DIR$/.idea/modules/app17_main.iml" group="app17" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app17_test.iml" filepath="$PROJECT_DIR$/.idea/modules/app17_test.iml" group="app17" />
     </modules>
   </component>
 </project>
