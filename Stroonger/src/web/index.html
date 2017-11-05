@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="myAPP.js"></script>
+    <link href="myAPP.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4" id="sign_in_form">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">Sign in</h2>
+                <p class="signin_text">Email address</p>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" value="candidate1@gmail.com" required autofocus>
+                <p class="signin_text">Password</p>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" value="password1" required>
+                <hr>
+                <button id="signin" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+            <h2 id="greeting"></h2>
+            <button id="getResumes" class="btn btn-lg btn-primary btn-block" type="submit">Get Cars</button>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="table_form">
+            <p class="page_control">
+                <button id="previous" class="btn btn-default">Previous</button>&nbsp;&nbsp;
+                <button id="next" class="btn btn-default">Next</button>&nbsp;&nbsp;
+                <span id="page"></span>
+            </p>
+            <p class="sort_control">
+                <span>Sort by</span>&nbsp;&nbsp;
+                <button id="sort_by_file" class="btn btn-default">File Link</button>&nbsp;&nbsp;
+                <button id="sort_by_name" class="btn btn-default">Version Name</button>&nbsp;&nbsp;
+                <button id="sort_by_time" class="btn btn-default">Upload Time</button>&nbsp;&nbsp;
+                <button id="sort_default" class="btn btn-default">Default</button>
+            </p>
+
+
+            <table id="table_candidate" class="table table-hover">
+                <thead class="table_head">
+                <tr>
+                    <th>File Link</th>
+                    <th>Version Name</th>
+                    <th>Upload Date</th>
+                </tr>
+                </thead>
+                <tbody id="candidate_list">
+                <tr id="candidate_row">
+                    <td id="fileLink"></td>
+                    <td id="versionName"></td>
+                    <td id="uploadTime"></td>
+                </tr>
+                </tbody>
+            </table>
+            <p id="text_notification"></p>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
