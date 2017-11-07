@@ -15,7 +15,7 @@ POST createAdmin
 #### AdminSessionInterface:
 POST createAdminSession: 
 > emailAddress, password</br>
-> adminToken
+> adminToken, fN, lN, email
 
 #### CompanyInterface.class:
 POST createCompany:
