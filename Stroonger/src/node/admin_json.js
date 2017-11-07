@@ -1,6 +1,11 @@
 [{
-    "email": "xxx@gmail.com",
-    "password": "PasswordAfterCrypt",
-    "firstName": "first name 1",
-    "lastName": "last name 1"
+    "email": "admin@gmail.com",
+    "password": "admin", //F/PZtTgA4k5q/9o6Jzik6w==
+    "firstName": "Stroonger",
+    "lastName": "Admin"
 }]
+
+
+// POST admin
+// POST session
+// Success: return fN, lN, eM
