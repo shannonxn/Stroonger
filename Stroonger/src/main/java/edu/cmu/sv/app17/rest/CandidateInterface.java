@@ -196,7 +196,6 @@ public class CandidateInterface {
 
 
 
-
     @GET
     @Path("{id}/resumes")
     @Produces({MediaType.APPLICATION_JSON})
