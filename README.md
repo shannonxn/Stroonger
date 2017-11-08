@@ -7,6 +7,8 @@ Admin.class</br>
 AdminSession.class</br>
 Comapny.class</br>
 Position.class</br>
+Candidate.class</br>
+CandidateSession.class</br>
 
 ### REST
 #### AdminInterface.class:
@@ -60,13 +62,6 @@ DELETE deletePositionOfCompany:
 > @PathParam("position id")</br>
 > Admin Token Authentication
 
-GET getAllApplicationOfCompany:
-> @PathParam("company id")</br>
-> @QueryParam("sort by application date")</br>
-> @QueryParam("count")</br>
-> @QueryParam("offset")</br>
-> Admin Token Authentication
-
 #### PositionInterface.class:
 
 GET getAllPosition: 
@@ -78,15 +73,9 @@ GET getAllPosition:
 GET getPositionById: 
 > @PathParam("position id")
 
-GET getAllApplicationOfPosition:
-> @PathParam("position id")</br>
-> @QueryParam("sort by application date")</br>
-> @QueryParam("count")</br>
-> @QueryParam("offset")</br>
-> Admin Token Authentication
+#### CandidateInterface.class:
 
-
-
+#### CandidateSession.class:
 
 
 
