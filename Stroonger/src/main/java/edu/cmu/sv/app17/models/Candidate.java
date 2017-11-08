@@ -10,6 +10,7 @@ public class Candidate {
                      String gender, String age, String country, String state, String city,
                      String zipCode, String mobile, String currentTitle, String field,
                      String selfIntroduction) {
+
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

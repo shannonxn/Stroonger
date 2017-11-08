@@ -17,6 +17,7 @@ import edu.cmu.sv.app17.helpers.APPCrypt;
 import edu.cmu.sv.app17.helpers.APPListResponse;
 import edu.cmu.sv.app17.helpers.APPResponse;
 import edu.cmu.sv.app17.models.Company;
+import edu.cmu.sv.app17.models.Position;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
@@ -127,6 +128,98 @@ public class CompanyInterface {
             throw new APPInternalServerException(99,"Unexpected error");
         }
 
+    }
+
+
+    @GET
+    @Path("{id}/position")
+    @Produces({MediaType.APPLICATION_JSON})
+    public APPListResponse getAllPositionOfCompany(@PathParam("id") String companyid,
+                                                   @DefaultValue("_default") @QueryParam("name") String nameArg,
+                                                   @DefaultValue("_default") @QueryParam("type") String typeArg,
+                                                   @DefaultValue("_id") @QueryParam("sort") String sortArg,
+                                                   @DefaultValue("30") @QueryParam("count") int count,
+                                                   @DefaultValue("0") @QueryParam("offset") int offset) {
+
+        ArrayList<Position> positionList = new ArrayList<Position>();
+
+        try {
+            BasicDBObject query = new BasicDBObject();
+            query.put("companyId", companyid);
+
+            if(! nameArg.equals("_default")) {
+                query.put("name", nameArg);
+            }
+            if(! typeArg.equals("_default")) {
+                query.put("type", typeArg);
+            }
+
+            BasicDBObject sortParams = new BasicDBObject();
+            List<String> sortList = Arrays.asList(sortArg.split(","));
+            sortList.forEach(sortItem -> {
+                sortParams.put(sortItem,1);
+            });
+
+            long resultCount = positionCollection.count(query);
+            FindIterable<Document> results = positionCollection.find(query).sort(sortParams).skip(offset).limit(count);
+            for (Document item : results) {
+                String positionName = item.getString("name");
+                Position position = new Position(
+                        positionName,
+                        item.getString("type"),
+                        item.getString("description"),
+                        item.getString("date"),
+                        item.getString("location"),
+                        item.getString("companyId")
+                );
+                position.setId(item.getObjectId("_id").toString());
+                positionList.add(position);
+            }
+            return new APPListResponse(positionList, resultCount, offset, positionList.size());
+
+        } catch(APPBadRequestException e) {
+            throw e;
+        } catch(Exception e) {
+            System.out.println("EXCEPTION!!!!");
+            e.printStackTrace();
+            throw new APPInternalServerException(99,e.getMessage());
+        }
+
+    }
+
+
+    @GET
+    @Path("{id}/position/{positionid}")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getPositionOfCompanyById(@PathParam("id") String companyid,
+                                                @PathParam("positionid") String positionid) {
+        try {
+            BasicDBObject query = new BasicDBObject();
+            query.put("companyId", companyid);
+            query.put("_id", new ObjectId(positionid));
+
+            Document item = positionCollection.find(query).first();
+            if (item == null) {
+                throw new APPNotFoundException(0, "No such position!");
+            }
+            Position position = new Position(
+                    item.getString("name"),
+                    item.getString("type"),
+                    item.getString("description"),
+                    item.getString("date"),
+                    item.getString("location"),
+                    item.getString("companyId")
+            );
+            position.setId(item.getObjectId("_id").toString());
+            return new APPResponse(position);
+
+        } catch(APPNotFoundException e) {
+            throw new APPNotFoundException(0, "No such position!");
+        } catch(IllegalArgumentException e) {
+            throw new APPBadRequestException(45,"Doesn't look like MongoDB ID");
+        }  catch(Exception e) {
+            throw new APPInternalServerException(99,"Something happened, pinch me!");
+        }
     }
 
 

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
@@ -14,10 +13,9 @@ import edu.cmu.sv.app17.exceptions.APPInternalServerException;
 import edu.cmu.sv.app17.exceptions.APPNotFoundException;
 import edu.cmu.sv.app17.exceptions.APPUnauthorizedException;
 import edu.cmu.sv.app17.helpers.APPCrypt;
-import edu.cmu.sv.app17.helpers.APPListResponse;
 import edu.cmu.sv.app17.helpers.APPResponse;
+import edu.cmu.sv.app17.helpers.PATCH;
 import edu.cmu.sv.app17.models.Candidate;
-import edu.cmu.sv.app17.models.Resume;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
@@ -26,11 +24,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-@Path("candidates")
+@Path("candidate")
 public class CandidateInterface {
 
     private MongoCollection<Document> candidateCollection;
@@ -40,55 +36,23 @@ public class CandidateInterface {
 
     public CandidateInterface() {
         MongoClient mongoClient = new MongoClient();
-        MongoDatabase database = mongoClient.getDatabase("app17-7");
-
-        this.candidateCollection = database.getCollection("candidates");
-        this.resumeCollection = database.getCollection("resumes");
+        MongoDatabase database = mongoClient.getDatabase("stroonger");
+        this.candidateCollection = database.getCollection("candidate");
+        this.resumeCollection = database.getCollection("resume");
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
     }
 
-    @GET
-    @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse getAll() {
-
-        ArrayList<Candidate> candidateList = new ArrayList<Candidate>();
-
-        FindIterable<Document> results = candidateCollection.find();
-        if (results == null) {
-            return new APPResponse(candidateList);
-        }
-        for (Document item : results) {
-            Candidate candidate = new Candidate(
-                    item.getString("email"),
-                    item.getString("firstName"),
-                    item.getString("lastName"),
-                    item.getString("gender"),
-                    item.getString("age"),
-                    item.getString("country"),
-                    item.getString("state"),
-                    item.getString("city"),
-                    item.getString("zipCode"),
-                    item.getString("mobile"),
-                    item.getString("currentTitle"),
-                    item.getString("field"),
-                    item.getString("selfIntroduction")
-            );
-            candidate.setId(item.getObjectId("_id").toString());
-            candidateList.add(candidate);
-        }
-        return new APPResponse(candidateList);
-    }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public APPResponse getOne(@Context HttpHeaders headers, @PathParam("id") String id) {
+    public APPResponse getCandidateById(@Context HttpHeaders headers, @PathParam("id") String id) {
         try {
-            checkAuthentication(headers,id);
-            BasicDBObject query = new BasicDBObject();
+            checkAuthentication(headers, id);
 
+            BasicDBObject query = new BasicDBObject();
             query.put("_id", new ObjectId(id));
+
             Document item = candidateCollection.find(query).first();
             if (item == null) {
                 throw new APPNotFoundException(0, "No such candidate!");
@@ -108,20 +72,17 @@ public class CandidateInterface {
                     item.getString("field"),
                     item.getString("selfIntroduction")
             );
+
             candidate.setId(item.getObjectId("_id").toString());
             return new APPResponse(candidate);
 
-        }
-        catch(APPNotFoundException e) {
+        } catch(APPNotFoundException e) {
             throw new APPNotFoundException(0,"No such candidate!");
-        }
-        catch(APPUnauthorizedException e) {
+        } catch(APPUnauthorizedException e) {
             throw e;
-        }
-        catch(IllegalArgumentException e) {
+        } catch(IllegalArgumentException e) {
             throw new APPBadRequestException(45,"Doesn't look like MongoDB ID");
-        }
-        catch(Exception e) {
+        } catch(Exception e) {
             throw new APPInternalServerException(99,"Unexpected error");
         }
 
@@ -132,10 +93,11 @@ public class CandidateInterface {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse create(Object request) {
+    public APPResponse createCandidate(Object request) {
         JSONObject json = null;
         try {
             json = new JSONObject(ow.writeValueAsString(request));
+
             if (!json.has("email"))
                 throw new APPBadRequestException(55,"missing email");
             if (!json.has("password"))
@@ -195,84 +157,130 @@ public class CandidateInterface {
     }
 
 
-
-    @GET
-    @Path("{id}/resumes")
-    @Produces({MediaType.APPLICATION_JSON})
-    public APPListResponse getResumesForCandidate(@Context HttpHeaders headers, @PathParam("id") String id,
-                                            @DefaultValue("_id") @QueryParam("sort") String sortArg,
-                                            @DefaultValue("30") @QueryParam("count") int count,
-                                            @DefaultValue("20") @QueryParam("offset") int offset) {
-
-        ArrayList<Resume> resumeList = new ArrayList<Resume>();
-
-        try {
-            checkAuthentication(headers,id);
-
-            BasicDBObject query = new BasicDBObject();
-            query.put("ownerId", id);
-
-            BasicDBObject sortParams = new BasicDBObject();
-            List<String> sortList = Arrays.asList(sortArg.split(","));
-            sortList.forEach(sortItem -> {
-                sortParams.put(sortItem,1);
-            });
-
-            long resultCount = resumeCollection.count(query);
-
-            FindIterable<Document> results = resumeCollection.find(query).sort(sortParams).skip(offset).limit(count);
-
-            for (Document item : results) {
-                String fileLink = item.getString("fileLink");
-                Resume resume = new Resume(
-                        fileLink,
-                        item.getString("versionName"),
-                        item.getString("uploadTime"),
-                        item.getString("ownerId")
-                );
-                resume.setId(item.getObjectId("_id").toString());
-                resumeList.add(resume);
-            }
-            return new APPListResponse(resumeList,resultCount,offset,resumeList.size());
-
-        }
-        catch(APPBadRequestException e) {
-            throw e;
-        }
-        catch(APPUnauthorizedException e) {
-            throw e;
-        }
-        catch(Exception e) {
-            System.out.println("EXCEPTION!!!!");
-            e.printStackTrace();
-            throw new APPInternalServerException(99,e.getMessage());
-        }
-
-    }
-
-
-    @POST
-    @Path("{id}/resumes")
+    @PATCH
+    @Path("{id}")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse createResume(@PathParam("id") String id, Object request) {
-        JSONObject json = null;
+    public APPResponse updateCandidate(@Context HttpHeaders headers,
+                                       @PathParam("id") String id,
+                                       Object request) {
+
         try {
+            checkAuthentication(headers, id);
+
+            JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
-        }
-        catch (JsonProcessingException e) {
+
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(id));
+
+            int errorFlag = 0;
+
+            Document doc = new Document();
+            if (json.has("email")) {
+                doc.append("email",json.getString("email"));
+                errorFlag = 1;
+            }
+            if (json.has("password")) {
+                doc.append("password", json.getString("password"));
+                errorFlag = 1;
+            }
+            if (json.has("firstName")) {
+                doc.append("firstName", json.getString("firstName"));
+                errorFlag = 1;
+            }
+            if (json.has("lastName")) {
+                doc.append("lastName", json.getString("lastName"));
+                errorFlag = 1;
+            }
+            if (json.has("gender")) {
+                doc.append("gender", json.getString("gender"));
+                errorFlag = 1;
+            }
+            if (json.has("age")) {
+                doc.append("age", json.getString("age"));
+                errorFlag = 1;
+            }
+            if (json.has("country")) {
+                doc.append("country", json.getString("country"));
+                errorFlag = 1;
+            }
+            if (json.has("state")) {
+                doc.append("state", json.getString("state"));
+                errorFlag = 1;
+            }
+            if (json.has("city")) {
+                doc.append("city", json.getString("city"));
+                errorFlag = 1;
+            }
+            if (json.has("zipCode")) {
+                doc.append("zipCode", json.getString("zipCode"));
+                errorFlag = 1;
+            }
+            if (json.has("mobile")) {
+                doc.append("mobile", json.getString("mobile"));
+                errorFlag = 1;
+            }
+            if (json.has("currentTitle")) {
+                doc.append("currentTitle", json.getString("currentTitle"));
+                errorFlag = 1;
+            }
+            if (json.has("field")) {
+                doc.append("field", json.getString("field"));
+                errorFlag = 1;
+            }
+            if (json.has("selfIntroduction")) {
+                doc.append("selfIntroduction", json.getString("selfIntroduction"));
+                errorFlag = 1;
+            }
+
+            if(errorFlag == 0) {
+                throw new APPBadRequestException(55,"The properties you want to update are wrong.");
+            }
+
+            Document set = new Document("$set", doc);
+            candidateCollection.updateOne(query,set);
+
+        } catch (JsonProcessingException e) {
             throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
         }
-        if (!json.has("fileLink"))
-            throw new APPBadRequestException(55,"missing fileLink");
-        if (!json.has("versionName"))
-            throw new APPBadRequestException(55,"missing versionName");
-        Document doc = new Document("fileLink", json.getString("fileLink"))
-                .append("versionName", json.getString("versionName"))
-                .append("ownerId", id);
-        resumeCollection.insertOne(doc);
+
         return new APPResponse();
     }
+
+
+    @DELETE
+    @Path("{id}")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public Object deleteCandidate(@Context HttpHeaders headers, @PathParam("id") String id) {
+        try {
+            checkAuthentication(headers, id);
+
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(id));
+
+            DeleteResult deleteResult = candidateCollection.deleteOne(query);
+
+            if (deleteResult.getDeletedCount() < 1)
+                throw new APPNotFoundException(66,"Could not delete");
+
+            return new JSONObject();
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+    }
+
+
 
     void checkAuthentication(HttpHeaders headers, String id) throws Exception{
         List<String> authHeaders = headers.getRequestHeader(HttpHeaders.AUTHORIZATION);
@@ -283,19 +291,5 @@ public class CandidateInterface {
         if (id.compareTo(clearToken) != 0) {
             throw new APPUnauthorizedException(71,"Invalid token. Please try getting a new token");
         }
-    }
-
-    @DELETE
-    @Path("{id}")
-    @Produces({ MediaType.APPLICATION_JSON})
-    public Object delete(@PathParam("id") String id) {
-        BasicDBObject query = new BasicDBObject();
-        query.put("_id", new ObjectId(id));
-
-        DeleteResult deleteResult = candidateCollection.deleteOne(query);
-        if (deleteResult.getDeletedCount() < 1)
-            throw new APPNotFoundException(66,"Could not delete");
-
-        return new JSONObject();
     }
 }

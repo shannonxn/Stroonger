@@ -13,7 +13,7 @@ import edu.cmu.sv.app17.exceptions.APPNotFoundException;
 import edu.cmu.sv.app17.helpers.APPCrypt;
 import edu.cmu.sv.app17.helpers.APPResponse;
 import edu.cmu.sv.app17.models.Candidate;
-import edu.cmu.sv.app17.models.Session;
+import edu.cmu.sv.app17.models.CandidateSession;
 import org.bson.Document;
 import org.json.JSONObject;
 
@@ -23,23 +23,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("sessions")
+@Path("candidateSession")
 
-public class SessionsInterface {
+public class CandidateSessionsInterface {
 
     private MongoCollection<Document> candidateCollection;
-    private MongoCollection<Document> resumeCollection;
     private ObjectWriter ow;
 
 
-    public SessionsInterface() {
+    public CandidateSessionsInterface() {
         MongoClient mongoClient = new MongoClient();
-        MongoDatabase database = mongoClient.getDatabase("app17-7");
-
-        this.candidateCollection = database.getCollection("candidates");
-        this.resumeCollection = database.getCollection("resumes");
+        MongoDatabase database = mongoClient.getDatabase("stroonger");
+        this.candidateCollection = database.getCollection("candidate");
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-
     }
 
 
@@ -80,21 +76,17 @@ public class SessionsInterface {
                     item.getString("selfIntroduction")
             );
             candidate.setId(item.getObjectId("_id").toString());
-            return new APPResponse(new Session(candidate));
-        }
-        catch (JsonProcessingException e) {
+            return new APPResponse(new CandidateSession(candidate));
+        } catch (JsonProcessingException e) {
             throw new APPBadRequestException(33, e.getMessage());
-        }
-        catch (APPBadRequestException e) {
+        } catch (APPBadRequestException e) {
             throw e;
-        }
-        catch (APPNotFoundException e) {
-            throw e;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new APPInternalServerException(0, e.getMessage());
         }
     }
+
+
 }
 
 
