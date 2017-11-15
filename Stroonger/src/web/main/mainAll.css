@@ -1,0 +1,15 @@
+.admin_banner {
+    background-color: cadetblue;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+.admin_banner p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+}
+
+.bottom_20 {
+    margin-bottom: 20px;
+}

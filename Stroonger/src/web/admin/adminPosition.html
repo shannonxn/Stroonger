@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="adminAll.js"></script>
+
+    <script src="adminPosition.js"></script>
+    <link href="adminPosition.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 admin_banner">
+            <p>Stroonger Admin System</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_position">Position</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_candidate">Candidate</button>
+        </div>
+
+        <div class="col-md-10">
+
+            <form id="admin_company_detail_add_pos_orm">
+                <div class="form-group">
+                    <label for="companyInputPosName">Position Name</label>
+                    <input type="text" class="form-control" id="companyInputPosName" placeholder="Position Name">
+                    <p id="posNameError">Please input the position name.</p>
+                </div>
+                <div class="form-group">
+                    <label for="companyInputPosType">Position Type</label>
+                    <input type="text" class="form-control" id="companyInputPosType" placeholder="Position Type">
+                    <p id="posFieldError">Please input the position type.</p>
+                </div>
+                <div class="form-group">
+                    <label for="companyInputPosDescription">Position Description</label>
+                    <input type="text" class="form-control" id="companyInputPosDescription" placeholder="Position Description">
+                    <p id="posDescriptionError">Please input the position description.</p>
+                </div>
+                <div class="form-group">
+                    <label for="companyInputPosLocation">Position Location</label>
+                    <input type="text" class="form-control" id="companyInputPosLocation" placeholder="Position Location">
+                    <p id="posLocationError">Please input the position location.</p>
+                </div>
+                <button type="button" class="btn btn-primary" id="admin_com_pos_add_create">Add a Position</button>
+                <button type="button" class="btn btn-default" id="admin_com_pos_add_cancel">Cancel</button>
+                <p id="admin_pos_add_error">Fail to add the position.</p>
+            </form>
+
+            <table class="table" id="table_position">
+                <thead>
+                <tr>
+                    <th>Position</th>
+                    <th> </th>
+                    <th>Location</th>
+                    <th>Publish Date</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="pos_row">
+                    <td id="pos_name"> Position Name</td>
+                    <td id="pos_com"> Company Name</td>
+                    <td id="pos_location">Position Location</td>
+                    <td id="pos_date">Publish Date</td>
+                    <td class="admin_pos_func_td">
+                        <button type="button" class="btn btn-primary" id="admin_pos_btn_detail">See Details</button>
+                        <button type="button" class="btn btn-default" id="admin_pos_btn_delete">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p id="admin_pos_all_error">Fail to load positions.</p>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

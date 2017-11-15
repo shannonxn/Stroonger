@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Admin Login</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
@@ -10,37 +10,34 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-
-    <script src="candidateLogin.js"></script>
-    <link href="candidateLogin.css" rel="stylesheet" />
+    <script src="adminLogin.js"></script>
+    <link href="adminLogin.css" rel="stylesheet" />
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-md-offset-4 col-md-4" id="sign_in_form">
-            <form class="form-signin">
-                <h2 class="form-signin-heading">Sign in</h2>
+        <div class="col-md-4 col-md-offset-4">
+            <p>Admin Login</p>
+            <form>
                 <div class="form-group">
-                    <label for="inputEmail">Email address</label>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="name@email.com" required autofocus>
+                    <label for="adminInputEmail">Email address</label>
+                    <input type="email" class="form-control" id="adminInputEmail" placeholder="Email">
                     <p id="adminEmailError"></p>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword">Password</label>
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Enter your password">
+                    <label for="adminInputPassword">Password</label>
+                    <input type="password" class="form-control" id="adminInputPassword" placeholder="Password">
                     <p id="adminPasswordError"></p>
                 </div>
-                <button type="submit" class="btn btn-default" id="signin">Sign in</button>
-                <button type="button" class="btn btn-default" id="signup">Sign up</button>
+                <button type="submit" class="btn btn-default" id="adminSignIn">Sign in</button>
+                <button type="button" class="btn btn-default" id="adminSignUp">Sign up</button>
                 <p id="adminSigninError">The password is wrong.</p>
             </form>
         </div>
     </div>
+
 </div>
-
-
-</body>
 
 
 </body>

@@ -53,7 +53,7 @@ public class AdminInterface {
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
     }
 
-
+    /*-----No Need------*/
     @GET
     @Produces({ MediaType.APPLICATION_JSON})
     public APPResponse getAllAdmin() {
@@ -76,7 +76,7 @@ public class AdminInterface {
         return new APPResponse(adminList);
     }
 
-
+    // Done
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -110,7 +110,7 @@ public class AdminInterface {
 
     }
 
-
+    // Done
     @POST
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
@@ -127,15 +127,6 @@ public class AdminInterface {
             if (!json.has("lastName"))
                 throw new APPBadRequestException(55,"missing lastName");
 
-
-            FindIterable<Document> results = adminCollection.find();
-            if (results != null) {
-                for (Document item : results) {
-                    if(item.getString("email").equals(json.getString("email"))) {
-                        throw new APPBadRequestException(55,"This email already exists");
-                    }
-                }
-            }
 
             Document doc = new Document("email", json.getString("email"))
                     .append("password", APPCrypt.encrypt(json.getString("password")))
@@ -154,15 +145,15 @@ public class AdminInterface {
         }
     }
 
-
+    // Done
     @PATCH
     @Path("{id}")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public APPResponse updateAdmin(@PathParam("id") String id, Object request) {
-        JSONObject json = null;
-
+    public APPResponse updateAdmin(@Context HttpHeaders headers, @PathParam("id") String id, Object request) {
         try {
+            checkAuthentication(headers,id);
+            JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
             BasicDBObject query = new BasicDBObject();
             query.put("_id", new ObjectId(id));
@@ -204,7 +195,7 @@ public class AdminInterface {
         return new APPResponse();
     }
 
-
+    /*-----No Need------*/
     @DELETE
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})
@@ -219,7 +210,7 @@ public class AdminInterface {
         return new JSONObject();
     }
 
-
+    // Done
     @POST
     @Path("{id}/company")
     @Consumes({ MediaType.APPLICATION_JSON})
@@ -268,7 +259,7 @@ public class AdminInterface {
 
     }
 
-
+    // Done
     @PATCH
     @Path("{id}/company/{companyid}")
     @Consumes({ MediaType.APPLICATION_JSON})
@@ -310,7 +301,7 @@ public class AdminInterface {
         return new APPResponse();
     }
 
-
+    // Done
     @DELETE
     @Path("{id}/company/{companyid}")
     @Produces({ MediaType.APPLICATION_JSON})
@@ -340,7 +331,7 @@ public class AdminInterface {
 
     }
 
-
+    // Done
     @POST
     @Path("{id}/company/{companyid}/position")
     @Consumes({ MediaType.APPLICATION_JSON})
@@ -385,7 +376,7 @@ public class AdminInterface {
         return new APPResponse();
     }
 
-
+    // Done
     @PATCH
     @Path("{id}/company/{companyid}/position/{positionid}")
     @Consumes({ MediaType.APPLICATION_JSON})
@@ -432,7 +423,7 @@ public class AdminInterface {
         return new APPResponse();
     }
 
-
+    // Done
     @DELETE
     @Path("{id}/company/{companyid}/position/{positionid}")
     @Produces({ MediaType.APPLICATION_JSON})
@@ -465,7 +456,7 @@ public class AdminInterface {
 
     }
 
-
+    /*-----------*/
     @GET
     @Path("{id}/candidate")
     @Produces({ MediaType.APPLICATION_JSON})
@@ -528,7 +519,7 @@ public class AdminInterface {
 
     }
 
-
+    /*-----------*/
     @GET
     @Path("{id}/candidate/{canid}")
     @Produces({MediaType.APPLICATION_JSON})

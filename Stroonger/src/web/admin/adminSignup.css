@@ -1,0 +1,27 @@
+#adminEmailError {
+    display: none;
+}
+#adminPasswordError {
+    display: none;
+}
+#adminConfrimPasswordError {
+    display: none;
+}
+#adminFirstNameError {
+    display: none;
+}
+#adminLastNameError {
+    display: none;
+}
+#adminSignupError {
+    display: none;
+}
+
+.text_adminTitle {
+    font-size: 20px;
+    font-weight: bold;
+}
+.text_adminSubTitle {
+    font-size: 16px;
+    font-weight: bold;
+}

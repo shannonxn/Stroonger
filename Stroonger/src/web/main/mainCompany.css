@@ -1,0 +1,47 @@
+.admin_banner {
+    background-color: cadetblue;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+.admin_banner p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+}
+
+.admin_company_func_td {
+    text-align: right;
+}
+
+.admin_company_add_form {
+    display: none;
+}
+
+.admin_company_all_error {
+    display: none;
+}
+
+#table_company {
+    margin-top: 30px;
+}
+
+#companyNameError {
+    display: none;
+}
+
+#companyFieldError {
+    display: none;
+}
+
+#companyDescriptionError {
+    display: none;
+}
+
+#companyLocationError {
+    display: none;
+}
+
+#admin_company_add_error {
+    display: none;
+}

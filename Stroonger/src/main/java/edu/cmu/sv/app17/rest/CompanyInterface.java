@@ -46,7 +46,7 @@ public class CompanyInterface {
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
     }
 
-
+    // Done
     @GET
     @Produces({ MediaType.APPLICATION_JSON})
     public APPListResponse getAllCompany(@DefaultValue("_default") @QueryParam("name") String nameArg,
@@ -98,7 +98,7 @@ public class CompanyInterface {
 
     }
 
-
+    // Done
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -130,7 +130,7 @@ public class CompanyInterface {
 
     }
 
-
+    // Done
     @GET
     @Path("{id}/position")
     @Produces({MediaType.APPLICATION_JSON})
@@ -187,7 +187,7 @@ public class CompanyInterface {
 
     }
 
-
+    /*-----------*/
     @GET
     @Path("{id}/position/{positionid}")
     @Produces({ MediaType.APPLICATION_JSON})

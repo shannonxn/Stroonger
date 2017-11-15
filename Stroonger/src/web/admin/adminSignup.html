@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="adminSignup.js"></script>
+    <link href="adminSignup.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <p>Admin Sign Up</p>
+            <form>
+                <div class="form-group">
+                    <label for="adminInputEmail">Email address</label>
+                    <input type="email" class="form-control" id="adminInputEmail" placeholder="Email">
+                    <p id="adminEmailError"></p>
+                </div>
+                <div class="form-group">
+                    <label for="adminInputPassword">Password</label>
+                    <input type="password" class="form-control" id="adminInputPassword" placeholder="Password">
+                    <p id="adminPasswordError"></p>
+                </div>
+                <div class="form-group">
+                    <label for="adminInputConfrimPassword">Comfirm Password</label>
+                    <input type="password" class="form-control" id="adminInputConfrimPassword" placeholder="Password">
+                    <p id="adminConfrimPasswordError"></p>
+                </div>
+                <div class="form-group">
+                    <label for="adminInputFirstName">First Name</label>
+                    <input type="text" class="form-control" id="adminInputFirstName" placeholder="First Name">
+                    <p id="adminFirstNameError">Please input your first name.</p>
+                </div>
+                <div class="form-group">
+                    <label for="adminInputLastName">Last Name</label>
+                    <input type="text" class="form-control" id="adminInputLastName" placeholder="Last Name">
+                    <p id="adminLastNameError">Please input your last name.</p>
+                </div>
+                <button type="submit" class="btn btn-default" id="adminSignUp">Sign up</button>
+                <p id="adminSignupError">Fail to sign up.</p>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -5,6 +5,7 @@ $(function() {
     var count = 20;
     var total = -1;
     var sortValue = "";
+
     //alert("Please use this form to login");
     $("#getResumes").hide();
     $("#candidate_row").hide();

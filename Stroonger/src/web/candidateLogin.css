@@ -27,3 +27,7 @@
 #table_form {
     margin-bottom: 50px;
 }
+
+#adminSigninError {
+    display: none;
+}
