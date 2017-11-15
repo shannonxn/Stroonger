@@ -15,7 +15,107 @@
 </head>
 
 <body>
-    <p>Sign Up</p>
-    <button class="btn btn-primary" id="sign_up_submit">Sign Up</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4" id="register_form">
+            <form class="form-register">
+                <h2 class="form-register-heading">Sign up</h2>
+                <div class="form-group">
+                    <label for="inputEmail">Email address</label>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="name@email.com">
+                    <p id="candidateEmailError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Enter your password">
+                    <p id="candidatePasswordError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputConfirmPassword">Password</label>
+                    <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Comfirm your password">
+                    <p id="candidateConfrimPasswordError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputFirstName">FirstName</label>
+                    <input type="text" id="inputFirstName" class="form-control" placeholder="FirstName">
+                    <p id="candidateFirstNameError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputLastName">LastName</label>
+                    <input type="text" id="inputLastName" class="form-control" placeholder="LastName">
+                    <p id="candidateLastNameError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputGender">Gender</label>
+                    <input type="text" id="inputGender" class="form-control" placeholder="Gender">
+                    <p id="candidateGenderError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputAge">Age</label>
+                    <input type="text" id="inputAge" class="form-control" placeholder="Age">
+                    <p id="candidateAgeError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCountry">Country</label>
+                    <input type="text" id="inputCountry" class="form-control" placeholder="Country">
+                    <p id="candidateCountryError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputState">State</label>
+                    <input type="text" id="inputState" class="form-control" placeholder="State">
+                    <p id="candidateStateError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCity">City</label>
+                    <input type="text" id="inputCity" class="form-control" placeholder="City">
+                    <p id="candidateCityError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputZipcode">Zip Code</label>
+                    <input type="text" id="inputZipcode" class="form-control" placeholder="Zip Code">
+                    <p id="candidateZipcodeError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputMobile">Mobile</label>
+                    <input type="text" id="inputMobile" class="form-control" placeholder="Mobile">
+                    <p id="candidateMobileError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCurrentTitle">Current Title</label>
+                    <input type="text" id="inputCurrentTitle" class="form-control" placeholder="Current Title">
+                    <p id="candidateCurrentTitleError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputField">Field</label>
+                    <input type="text" id="inputField" class="form-control" placeholder="Field">
+                    <p id="candidateFieldError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSelfIntroduction">Self Introduction</label>
+                    <input type="text" id="inputSelfIntroduction" class="form-control" placeholder="Self Introduction">
+                    <p id="candidateSelfIntroduction">Shouldn't be empty.</p>
+                </div>
+
+                <button id="candidateSignUp" class="btn btn-primary btn-block" type="button">Sign up</button>
+
+                <p id="candidateSignupError">Fail to sign up.</p>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

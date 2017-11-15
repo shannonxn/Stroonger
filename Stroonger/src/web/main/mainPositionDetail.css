@@ -26,14 +26,10 @@
     margin-top: 40px;
 }
 
-.admin_can_func_td {
-    text-align: right;
-}
-
-#admin_can_all_error {
+#admin_company_edit_error {
     display: none;
 }
 
-.sort_control {
-    float: right;
+#admin_company_edit_info {
+    display: none;
 }

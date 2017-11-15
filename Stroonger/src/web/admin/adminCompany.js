@@ -1,6 +1,9 @@
 $(function() {
     var token = null;
     var adminId = null;
+    var offset = 0;
+    var count = 20;
+    var total = -1;
 
     var URL = document.location.toString();
     var QueryString, tmpArr, queryParamert;
@@ -18,53 +21,81 @@ $(function() {
 
     $("#company_row").hide();
 
+    loadCandidate();
 
-    jQuery.ajax ({
-        url: "/api/company",
-        type: "GET",
-        beforeSend: function(request) {
-            request.setRequestHeader("Authorization", token);
-        },
-        dataType: "json",
-        contentType: "application/json; charset=utf-8"
-    })
-        .done(function(data){
-            data.content.forEach(function(item){
-                $( "#company_row" ).clone().prop("id",item.id).appendTo( "#table_company" );
-                $("#"+item.id).find("#company_name").text(item.name);
-                $("#"+item.id).prop("class","cloned");
-                $("#"+item.id).show();
-                $("#"+item.id).find("#admin_company_detail").click(function (e) {
-                    $(location).attr('href', 'adminCompanyDetail.html?adminId=' + adminId + '&token=' + token + '&companyId=' + item.id);
-                });
-                $("#"+item.id).find("#admin_company_delete").click(function (e) {
+    $("#next").click(function(e){
+        e.preventDefault();
+        if (offset + count < total) {
+            offset = offset + count;
+            loadCandidate();
+        }
+    });
 
-                    jQuery.ajax ({
-                        url: "/api/admin/" + adminId + "/company/" + item.id,
-                        type: "DELETE",
-                        beforeSend: function(request) {
-                            request.setRequestHeader("Authorization", token);
-                        },
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8"
-                    })
-                        .done(function(data){
-                            alert("Delete a Company Successfully!");
-                            window.location.reload();
-                        })
-                        .fail(function(data){
-                            $("#admin_company_all_error").text("Fail to delete.");
-                            $("#admin_company_all_error").css("display", "block");
-                        });
+    $("#previous").click(function(e){
+        e.preventDefault();
+        if (offset - count >= 0) {
+            offset = offset - count;
+            loadCandidate();
+        }
+    });
 
-                });
-            });
-            $("#admin_company_all_error").css("display", "none");
+    function loadCandidate() {
+        jQuery.ajax ({
+            url: "/api/company?offset=" + offset + "&count="  + count,
+            type: "GET",
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", token);
+            },
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
         })
-        .fail(function(data){
-            $("#admin_company_all_error").text("Fail to load companies.");
-            $("#admin_company_all_error").css("display", "block");
-        });
+            .done(function(data){
+
+                total = data.metadata.total;
+                $("#page").text("Page " + Math.floor(offset/count+1) + " of " + (Math.ceil(total/count)));
+                $("#table_company").find(".cloned").remove();
+
+                data.content.forEach(function(item){
+                    $( "#company_row" ).clone().prop("id",item.id).appendTo( "#table_company" );
+                    $("#"+item.id).find("#company_name").text(item.name);
+                    $("#"+item.id).prop("class","cloned");
+                    $("#"+item.id).show();
+                    $("#"+item.id).find("#admin_company_detail").click(function (e) {
+                        $(location).attr('href', 'adminCompanyDetail.html?adminId=' + adminId + '&token=' + token + '&companyId=' + item.id);
+                    });
+                    $("#"+item.id).find("#admin_company_delete").click(function (e) {
+
+                        jQuery.ajax ({
+                            url: "/api/admin/" + adminId + "/company/" + item.id,
+                            type: "DELETE",
+                            beforeSend: function(request) {
+                                request.setRequestHeader("Authorization", token);
+                            },
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8"
+                        })
+                            .done(function(data){
+                                alert("Delete a Company Successfully!");
+                                window.location.reload();
+                            })
+                            .fail(function(data){
+                                $("#admin_company_all_error").text("Fail to delete.");
+                                $("#admin_company_all_error").css("display", "block");
+                            });
+
+                    });
+                });
+                $("#admin_company_all_error").css("display", "none");
+            })
+            .fail(function(data){
+                $("#admin_company_all_error").text("Fail to load companies.");
+                $("#admin_company_all_error").css("display", "block");
+            });
+
+    }
+
+
+
 
     $("#admin_company_add_create").click(function (e) {
         var company_name = $("#companyInputName").val();

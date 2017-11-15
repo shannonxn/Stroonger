@@ -23,7 +23,7 @@
 }
 
 #table_company {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 #companyNameError {
@@ -44,4 +44,20 @@
 
 #admin_company_add_error {
     display: none;
+}
+
+.inline_p {
+    display: inline;
+}
+
+.bottom_40 {
+    margin-bottom: 40px;
+}
+
+.top_20 {
+    margin-top: 20px;
+}
+
+.top_40 {
+    margin-top: 40px;
 }

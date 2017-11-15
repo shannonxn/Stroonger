@@ -5,6 +5,10 @@ $(function() {
     var comField = null;
     var comLocation = null;
     var comDes = null;
+    var offset = 0;
+    var count = 20;
+    var total = -1;
+    var sortValue = "";
 
     var companyId = null;
 

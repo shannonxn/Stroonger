@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="mainAll.js"></script>
+
+    <script src="mainPositionDetail.js"></script>
+    <link href="mainPositionDetail.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 admin_banner">
+            <p>Stroonger Admin System</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_position">Position</button>
+        </div>
+
+        <div class="col-md-10">
+            <h3 id="admin_pos_detail_name">Position Name</h3>
+            <p class="top_20" id="admin_pos_detail_com">Company</p>
+            <div class="bottom_20">
+                <p class="inline_p" id="admin_pos_detail_field">Position Type</p>
+                <p class="inline_p"> | </p>
+                <p class="inline_p" id="admin_pos_detail_location">Position Location</p>
+                <p class="inline_p"> | </p>
+                <p class="inline_p" id="admin_pos_detail_date">Position Date</p>
+            </div>
+
+            <p class="top_40" id="admin_pos_detail_des">Position Description</p>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -10,36 +10,29 @@
     font-size: 30px;
 }
 
-.admin_company_func_td {
-    text-align: right;
+.signin_text {
+    margin-top: 10px;
 }
 
-.admin_company_add_form {
-    display: none;
+.page_control {
+    display: inline-block;
 }
 
-.admin_company_all_error {
-    display: none;
+.sort_control {
+    display: inline-block;
+    float: right;
 }
 
-#companyNameError {
-    display: none;
+#sign_in_form {
+    margin-bottom: 30px;
 }
 
-#companyFieldError {
-    display: none;
+#table_candidate {
+    margin-top: 20px;
 }
 
-#companyDescriptionError {
-    display: none;
-}
-
-#companyLocationError {
-    display: none;
-}
-
-#admin_company_add_error {
-    display: none;
+#table_form {
+    margin-bottom: 50px;
 }
 
 .inline_p {
@@ -68,4 +61,8 @@
 
 #searchCom {
     width: 100%;
+}
+
+.admin_pos_func_td {
+    text-align: right;
 }

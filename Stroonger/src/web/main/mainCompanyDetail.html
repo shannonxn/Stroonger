@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="mainAll.js"></script>
+
+    <script src="mainCompanyDetail.js"></script>
+    <link href="mainCompanyDetail.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 admin_banner">
+            <p>Stroonger Admin System</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_company">Company</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_position">Position</button>
+        </div>
+
+        <div class="col-md-10">
+            <h3 id="admin_company_detail_name">Company Name</h3>
+            <div class="bottom_20 top_20">
+                <p class="inline_p" id="admin_company_detail_field">Company Field</p>
+                <p class="inline_p"> | </p>
+                <p class="inline_p" id="admin_company_detail_location">Company Location</p>
+            </div>
+
+            <div class="top_40" id="admin_company_detail_div_des">
+                <p id="admin_company_detail_des">Company Description</p>
+            </div>
+
+            <div id="admin_company_detail_div_pos" class="top_40">
+
+                <p class="page_control inline_p">
+                    <button id="previous" class="btn btn-default btn-sm">Previous</button>&nbsp;&nbsp;
+                    <span id="page"></span>
+                    <button id="next" class="btn btn-default btn-sm">Next</button>&nbsp;&nbsp;
+                </p >
+                <p class="sort_control inline_p">
+                    <span>Sort by</span>&nbsp;&nbsp;
+                    <button id="sort_default" class="btn btn-default btn-sm">Default</button>&nbsp;&nbsp;
+                    <button id="sortByDate" class="btn btn-default btn-sm">Name</button>&nbsp;&nbsp;
+                    <button id="sortBYName" class="btn btn-default btn-sm">Publish Date</button>&nbsp;&nbsp;
+                </p>
+                <table class="table top_20" id="table_position">
+                    <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Location</th>
+                        <th>Publish Date</th>
+                        <th> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr id="pos_row">
+                        <td id="pos_name">Position Name</td>
+                        <td id="pos_location">Position Location</td>
+                        <td id="pos_date">Publish Date</td>
+                        <td class="admin_pos_func_td">
+                            <button type="button" class="btn btn-primary" id="admin_pos_btn_detail">See Details</button>
+                            <button type="button" class="btn btn-default" id="admin_pos_btn_delete">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p id="admin_pos_all_error">Fail to load positions.</p>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

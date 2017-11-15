@@ -1,0 +1,59 @@
+#candidateEmailError {
+    display: none;
+}
+#candidatePasswordError {
+    display: none;
+}
+#candidateConfirmPasswordError {
+    display: none;
+}
+#candidateFirstNameError {
+    display: none;
+}
+#candidateLastNameError {
+    display: none;
+}
+
+#candidateGenderError {
+    display: none;
+}
+
+#candidateAgeError {
+    display: none;
+}
+
+#candidateCountryError {
+    display: none;
+}
+
+#candidateStateError {
+    display: none;
+}
+
+#candidateCityError{
+    display: none;
+}
+
+#candidateZipcodeError {
+    display: none;
+}
+
+#candidateMobileError {
+    display: none;
+}
+
+#candidateCurrentTitleError {
+    display: none;
+}
+
+#candidateFieldError {
+    display: none;
+}
+
+#candidateSelfIntroduction {
+    display: none;
+}
+
+#candidateSignupError {
+    display: none;
+}

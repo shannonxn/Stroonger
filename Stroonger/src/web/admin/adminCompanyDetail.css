@@ -18,6 +18,10 @@
     margin-bottom: 20px;
 }
 
+.bottom_40 {
+    margin-bottom: 40px;
+}
+
 .top_20 {
     margin-top: 20px;
 }
@@ -68,4 +72,8 @@
 
 #admin_company_detail_add_pos_orm {
     display: none;
+}
+
+.sort_control {
+    float: right;
 }

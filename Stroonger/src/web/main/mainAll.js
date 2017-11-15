@@ -16,7 +16,7 @@ $(function() {
     }
 
 
-    $("#menu_account").click(function (e) {
+    $("#menu_home").click(function (e) {
         $(location).attr('href', 'candidateHome.html?userId=' + userId + '&token=' + token);
     });
     $("#menu_company").click(function (e) {

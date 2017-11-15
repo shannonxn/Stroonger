@@ -69,3 +69,7 @@
 #admin_company_detail_add_pos_orm {
     display: none;
 }
+
+.sort_control {
+    float: right;
+}

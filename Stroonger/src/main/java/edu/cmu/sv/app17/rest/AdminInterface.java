@@ -456,7 +456,7 @@ public class AdminInterface {
 
     }
 
-    /*-----------*/
+    // Done
     @GET
     @Path("{id}/candidate")
     @Produces({ MediaType.APPLICATION_JSON})
@@ -519,7 +519,7 @@ public class AdminInterface {
 
     }
 
-    /*-----------*/
+    // Done
     @GET
     @Path("{id}/candidate/{canid}")
     @Produces({MediaType.APPLICATION_JSON})

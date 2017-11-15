@@ -31,7 +31,7 @@
         </div>
         <div class="col-md-10">
 
-            <form class="admin_edit_content" id="admin_company_add_form">
+            <form class="admin_edit_content bottom_40" id="admin_company_add_form">
                 <div class="form-group">
                     <label for="companyInputName">Company Name</label>
                     <input type="text" class="form-control" id="companyInputName" placeholder="Company Name">
@@ -56,6 +56,17 @@
                 <button type="button" class="btn btn-default" id="admin_company_add_cancel">Cancel</button>
                 <p id="admin_company_add_error">Fail to add the company.</p>
             </form>
+
+            <p class="page_control inline_p">
+                <button id="previous" class="btn btn-default btn-sm">Previous</button>&nbsp;&nbsp;
+                <span id="page"></span>
+                <button id="next" class="btn btn-default btn-sm">Next</button>&nbsp;&nbsp;
+            </p >
+            <p class="sort_control inline_p">
+                <span>Sort by</span>&nbsp;&nbsp;
+                <button id="sort_default" class="btn btn-default btn-sm">Default</button>&nbsp;&nbsp;
+                <button id="sortByDate" class="btn btn-default btn-sm">Email Address</button>&nbsp;&nbsp;
+            </p>
 
             <table class="table" id="table_company">
                 <thead>

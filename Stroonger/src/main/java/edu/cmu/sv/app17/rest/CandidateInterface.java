@@ -42,7 +42,7 @@ public class CandidateInterface {
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
     }
 
-
+    // Done
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -89,7 +89,7 @@ public class CandidateInterface {
 
     }
 
-
+    // Done
     @POST
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
@@ -156,7 +156,7 @@ public class CandidateInterface {
         }
     }
 
-
+    // Done
     @PATCH
     @Path("{id}")
     @Consumes({ MediaType.APPLICATION_JSON})
@@ -252,7 +252,7 @@ public class CandidateInterface {
         return new APPResponse();
     }
 
-
+    /*-----No Need------*/
     @DELETE
     @Path("{id}")
     @Produces({ MediaType.APPLICATION_JSON})

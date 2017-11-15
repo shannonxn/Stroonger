@@ -10,11 +10,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <script src="mainAll.js"></script>
-    <link href="mainAll.css" rel="stylesheet" />
+    <script src="adminAll.js"></script>
 
-    <script src="candidateHome.js"></script>
-    <link href="candidateHome.css" rel="stylesheet" />
+    <script src="adminCandidateDetail.js"></script>
+    <link href="adminCandidateDetail.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -26,10 +25,12 @@
     </div>
     <div class="row" id="user_heading">
         <div class="col-md-2">
-            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_home">Home</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_position">Position</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_candidate">Candidate</button>
         </div>
+
         <div class="col-md-10">
             <h2 class="form-signin-heading bottom_20">User Info</h2>
             <table class="table">
@@ -153,9 +154,7 @@
                 </tbody>
             </table>
 
-            <button class="btn btn-primary" id="edit_button">Edit Information</button>
-            <button class="btn btn-primary" id="save_button">Save Changes</button>
-            <button class="btn btn-default" id="logout_button">Log Out</button>
+            <button class="btn btn-primary" id="return_button">Reture</button>
 
             <p id="edit_error">Fail to edit information.</p>
 

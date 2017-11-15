@@ -27,37 +27,28 @@
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
             <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_company">Company</button>
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_position">Position</button>
-            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_candidate">Candidate</button>
         </div>
         <div class="col-md-10">
 
-            <form class="admin_edit_content" id="admin_company_add_form">
+            <p class="page_control inline_p">
+                <button id="previous" class="btn btn-default btn-sm">Previous</button>&nbsp;&nbsp;
+                <span id="page"></span>
+                <button id="next" class="btn btn-default btn-sm">Next</button>&nbsp;&nbsp;
+            </p >
+            <p class="sort_control inline_p">
+                <span>Sort by</span>&nbsp;&nbsp;
+                <button id="sort_default" class="btn btn-default btn-sm">Default</button>&nbsp;&nbsp;
+                <button id="sortByDate" class="btn btn-default btn-sm">Name</button>&nbsp;&nbsp;
+            </p>
+
+            <form class="form-inline top_20">
                 <div class="form-group">
-                    <label for="companyInputName">Company Name</label>
-                    <input type="text" class="form-control" id="companyInputName" placeholder="Company Name">
-                    <p id="companyNameError">Please input the company name.</p>
+                    <input type="text" class="form-control" id="searchCom" placeholder="Company Name">
                 </div>
-                <div class="form-group">
-                    <label for="companyInputField">Company Field</label>
-                    <input type="text" class="form-control" id="companyInputField" placeholder="Company Field">
-                    <p id="companyFieldError">Please input the company field.</p>
-                </div>
-                <div class="form-group">
-                    <label for="companyInputDescription">Company Description</label>
-                    <input type="text" class="form-control" id="companyInputDescription" placeholder="Company Description">
-                    <p id="companyDescriptionError">Please input the company description.</p>
-                </div>
-                <div class="form-group">
-                    <label for="companyInputLocation">Company Location</label>
-                    <input type="text" class="form-control" id="companyInputLocation" placeholder="Company Location">
-                    <p id="companyLocationError">Please input the company location.</p>
-                </div>
-                <button type="button" class="btn btn-primary" id="admin_company_add_create">Add a Company</button>
-                <button type="button" class="btn btn-default" id="admin_company_add_cancel">Cancel</button>
-                <p id="admin_company_add_error">Fail to add the company.</p>
+                <button type="button" class="btn btn-default" id="search_btn">Search</button>
             </form>
 
-            <table class="table" id="table_company">
+            <table class="table top_20" id="table_company">
                 <thead>
                     <tr>
                         <th>Company</th>
@@ -69,7 +60,6 @@
                         <td id="company_name">Company Name</td>
                         <td class="admin_company_func_td">
                             <button type="button" class="btn btn-primary" id="admin_company_detail">See Details</button>
-                            <button type="button" class="btn btn-default" id="admin_company_delete">Delete</button>
                         </td>
                     </tr>
                 </tbody>

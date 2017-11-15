@@ -1,6 +1,12 @@
 $(function() {
     var token = null;
-    var adminId = null;
+    var userId = null;
+    var offset = 0;
+    var count = 20;
+    var total = -1;
+    var sortValue = "";
+
+    var searchVal = "";
 
     var URL = document.location.toString();
     var QueryString, tmpArr, queryParamert;
@@ -9,7 +15,7 @@ $(function() {
         QueryString = URL.substring(URL.lastIndexOf("?") + 1, URL.length);
         tmpArr = QueryString.split("&");
 
-        adminId = tmpArr[0].substring(tmpArr[0].indexOf("=") + 1, tmpArr[0].length);
+        userId = tmpArr[0].substring(tmpArr[0].indexOf("=") + 1, tmpArr[0].length);
         token = tmpArr[1].substring(tmpArr[1].indexOf("=") + 1, tmpArr[1].length);
     }
     else {
@@ -18,120 +24,222 @@ $(function() {
 
     $("#company_row").hide();
 
+    loadCandidate();
 
-    jQuery.ajax ({
-        url: "/api/company",
-        type: "GET",
-        beforeSend: function(request) {
-            request.setRequestHeader("Authorization", token);
-        },
-        dataType: "json",
-        contentType: "application/json; charset=utf-8"
-    })
-        .done(function(data){
-            data.content.forEach(function(item){
-                $( "#company_row" ).clone().prop("id",item.id).appendTo( "#table_company" );
-                $("#"+item.id).find("#company_name").text(item.name);
-                $("#"+item.id).prop("class","cloned");
-                $("#"+item.id).show();
-                $("#"+item.id).find("#admin_company_detail").click(function (e) {
-                    $(location).attr('href', 'adminCompanyDetail.html?adminId=' + adminId + '&token=' + token + '&companyId=' + item.id);
-                });
-                $("#"+item.id).find("#admin_company_delete").click(function (e) {
+    $("#sort_default").click(function (e) {
+        e.preventDefault();
+        sortValue = "";
+        loadCandidate();
+    });
 
-                    jQuery.ajax ({
-                        url: "/api/admin/" + adminId + "/company/" + item.id,
-                        type: "DELETE",
-                        beforeSend: function(request) {
-                            request.setRequestHeader("Authorization", token);
-                        },
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8"
-                    })
-                        .done(function(data){
-                            alert("Delete a Company Successfully!");
-                            window.location.reload();
-                        })
-                        .fail(function(data){
-                            $("#admin_company_all_error").text("Fail to delete.");
-                            $("#admin_company_all_error").css("display", "block");
-                        });
+    $("#sortByDate").click(function (e) {
+        e.preventDefault();
+        sortValue = "name";
+        loadCandidate();
+    });
 
-                });
-            });
-            $("#admin_company_all_error").css("display", "none");
+    $("#next").click(function(e){
+        e.preventDefault();
+        if (offset + count < total) {
+            offset = offset + count;
+            loadCandidate();
+        }
+    });
+
+    $("#previous").click(function(e){
+        e.preventDefault();
+        console.log("Cliked");
+        if (offset - count >= 0) {
+            offset = offset - count;
+            loadCandidate();
+        }
+    });
+
+    $("#search_btn").click(function(e){
+        searchVal = $("#searchCom").val();
+        jQuery.ajax ({
+            url: "/api/company?name=" + searchVal + "&offset=" + offset + "&count=" + count,
+            type: "GET",
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", token);
+            },
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
         })
-        .fail(function(data){
-            $("#admin_company_all_error").text("Fail to load companies.");
-            $("#admin_company_all_error").css("display", "block");
-        });
+            .done(function(data){
+                total = data.metadata.total;
+                $("#page").text("Page " + Math.floor(offset/count+1) + " of " + (Math.ceil(total/count)));
+                $("#table_company").find(".cloned").remove();
 
-    $("#admin_company_add_create").click(function (e) {
-        var company_name = $("#companyInputName").val();
-        var company_field = $("#companyInputField").val();
-        var company_description = $("#companyInputDescription").val();
-        var company_location = $("#companyInputLocation").val();
+                data.content.forEach(function(item){
+                    $( "#company_row" ).clone().prop("id",item.id).appendTo( "#table_company" );
+                    $("#"+item.id).find("#company_name").text(item.name);
+                    $("#"+item.id).prop("class","cloned");
+                    $("#"+item.id).show();
+                    $("#"+item.id).find("#admin_company_detail").click(function (e) {
+                        $(location).attr('href', 'mainCompanyDetail.html?userId=' + userId + '&token=' + token + '&companyId=' + item.id);
+                    });
 
-        var errorFlag = 0;
-
-        if(company_name === "") {
-            $("#companyNameError").css("display", "block");
-        } else {
-            $("#companyNameError").css("display", "none");
-            errorFlag = errorFlag + 1;
-        }
-
-        if(company_field === "") {
-            $("#companyFieldError").css("display", "block");
-        } else {
-            $("#companyFieldError").css("display", "none");
-            errorFlag = errorFlag + 1;
-        }
-
-        if(company_description === "") {
-            $("#companyDescriptionError").css("display", "block");
-        } else {
-            $("#companyDescriptionError").css("display", "none");
-            errorFlag = errorFlag + 1;
-        }
-
-        if(company_location === "") {
-            $("#companyLocationError").css("display", "block");
-        } else {
-            $("#companyLocationError").css("display", "none");
-            errorFlag = errorFlag + 1;
-        }
-
-        if(errorFlag >= 4) {
-            jQuery.ajax ({
-                url: "/api/admin/" + adminId + "/company",
-                type: "POST",
-                beforeSend: function(request) {
-                    request.setRequestHeader("Authorization", token);
-                },
-                data: JSON.stringify({
-                    name:company_name,
-                    field:company_field,
-                    description:company_description,
-                    location:company_location
-                }),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8"
+                });
+                $("#admin_company_all_error").css("display", "none");
             })
-                .done(function(data){
-                    $("#admin_company_add_error").css("display", "none");
-                    alert("Add a Company Successfully!");
-                    window.location.reload();
-                })
-                .fail(function(data){
-                    $("#admin_company_add_error").css("display", "block");
-                })
-        }
+            .fail(function(data){
+                $("#admin_company_all_error").text("Fail to load companies.");
+                $("#admin_company_all_error").css("display", "block");
+            });
     });
 
-    $("#admin_company_add_cancel").click(function (e) {
-        window.location.reload();
-    });
+
+    function loadCandidate() {
+
+        if(searchVal === "") {
+
+            if (sortValue == "") {
+
+                jQuery.ajax({
+                    url: "/api/company?offset=" + offset + "&count=" + count,
+                    type: "GET",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Authorization", token);
+                    },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                })
+                    .done(function (data) {
+                        total = data.metadata.total;
+                        $("#page").text("Page " + Math.floor(offset / count + 1) + " of " + (Math.ceil(total / count)));
+                        $("#table_company").find(".cloned").remove();
+
+                        data.content.forEach(function (item) {
+                            $("#company_row").clone().prop("id", item.id).appendTo("#table_company");
+                            $("#" + item.id).find("#company_name").text(item.name);
+                            $("#" + item.id).prop("class", "cloned");
+                            $("#" + item.id).show();
+                            $("#" + item.id).find("#admin_company_detail").click(function (e) {
+                                $(location).attr('href', 'mainCompanyDetail.html?userId=' + userId + '&token=' + token + '&companyId=' + item.id);
+                            });
+
+                        });
+                        $("#admin_company_all_error").css("display", "none");
+                    })
+                    .fail(function (data) {
+                        $("#admin_company_all_error").text("Fail to load companies.");
+                        $("#admin_company_all_error").css("display", "block");
+                    });
+
+            }
+
+            else {
+                jQuery.ajax({
+                    url: "/api/company?sort=" + sortValue + "&offset=" + offset + "&count=" + count,
+                    type: "GET",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Authorization", token);
+                    },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                })
+                    .done(function (data) {
+                        total = data.metadata.total;
+                        $("#page").text("Page " + Math.floor(offset / count + 1) + " of " + (Math.ceil(total / count)));
+                        $("#table_company").find(".cloned").remove();
+
+                        data.content.forEach(function (item) {
+                            $("#company_row").clone().prop("id", item.id).appendTo("#table_company");
+                            $("#" + item.id).find("#company_name").text(item.name);
+                            $("#" + item.id).prop("class", "cloned");
+                            $("#" + item.id).show();
+                            $("#" + item.id).find("#admin_company_detail").click(function (e) {
+                                $(location).attr('href', 'mainCompanyDetail.html?userId=' + userId + '&token=' + token + '&companyId=' + item.id);
+                            });
+
+                        });
+                        $("#admin_company_all_error").css("display", "none");
+                    })
+                    .fail(function (data) {
+                        $("#admin_company_all_error").text("Fail to load companies.");
+                        $("#admin_company_all_error").css("display", "block");
+                    });
+
+
+            }
+        }
+
+        else {
+            if (sortValue == "") {
+
+                jQuery.ajax({
+                    url: "/api/company?name=" + searchVal + "&offset=" + offset + "&count=" + count,
+                    type: "GET",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Authorization", token);
+                    },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                })
+                    .done(function (data) {
+                        total = data.metadata.total;
+                        $("#page").text("Page " + Math.floor(offset / count + 1) + " of " + (Math.ceil(total / count)));
+                        $("#table_company").find(".cloned").remove();
+
+                        data.content.forEach(function (item) {
+                            $("#company_row").clone().prop("id", item.id).appendTo("#table_company");
+                            $("#" + item.id).find("#company_name").text(item.name);
+                            $("#" + item.id).prop("class", "cloned");
+                            $("#" + item.id).show();
+                            $("#" + item.id).find("#admin_company_detail").click(function (e) {
+                                $(location).attr('href', 'mainCompanyDetail.html?userId=' + userId + '&token=' + token + '&companyId=' + item.id);
+                            });
+
+                        });
+                        $("#admin_company_all_error").css("display", "none");
+                    })
+                    .fail(function (data) {
+                        $("#admin_company_all_error").text("Fail to load companies.");
+                        $("#admin_company_all_error").css("display", "block");
+                    });
+
+            }
+
+            else {
+                jQuery.ajax({
+                    url: "/api/company?name=" + searchVal + "&sort=" + sortValue + "&offset=" + offset + "&count=" + count,
+                    type: "GET",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Authorization", token);
+                    },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                })
+                    .done(function (data) {
+                        total = data.metadata.total;
+                        $("#page").text("Page " + Math.floor(offset / count + 1) + " of " + (Math.ceil(total / count)));
+                        $("#table_company").find(".cloned").remove();
+
+                        data.content.forEach(function (item) {
+                            $("#company_row").clone().prop("id", item.id).appendTo("#table_company");
+                            $("#" + item.id).find("#company_name").text(item.name);
+                            $("#" + item.id).prop("class", "cloned");
+                            $("#" + item.id).show();
+                            $("#" + item.id).find("#admin_company_detail").click(function (e) {
+                                $(location).attr('href', 'mainCompanyDetail.html?userId=' + userId + '&token=' + token + '&companyId=' + item.id);
+                            });
+
+                        });
+                        $("#admin_company_all_error").css("display", "none");
+                    })
+                    .fail(function (data) {
+                        $("#admin_company_all_error").text("Fail to load companies.");
+                        $("#admin_company_all_error").css("display", "block");
+                    });
+
+
+            }
+        }
+
+    }
+
+
 
 
 

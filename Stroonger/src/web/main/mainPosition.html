@@ -10,10 +10,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <script src="adminAll.js"></script>
+    <script src="mainAll.js"></script>
 
-    <script src="adminPosition.js"></script>
-    <link href="adminPosition.css" rel="stylesheet" />
+    <script src="mainPosition.js"></script>
+    <link href="mainPosition.css" rel="stylesheet" />
 </head>
 <body>
 <div class="container-fluid">
@@ -27,11 +27,9 @@
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
             <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_position">Position</button>
-            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_candidate">Candidate</button>
         </div>
 
         <div class="col-md-10">
-
             <p class="page_control inline_p">
                 <button id="previous" class="btn btn-default btn-sm">Previous</button>&nbsp;&nbsp;
                 <span id="page"></span>
@@ -44,11 +42,18 @@
                 <button id="sortBYName" class="btn btn-default btn-sm">Publish Date</button>&nbsp;&nbsp;
             </p>
 
+            <form class="form-inline top_20">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="searchCom" placeholder="Position Name">
+                </div>
+                <button type="button" class="btn btn-default" id="search_btn">Search</button>
+            </form>
+
             <table class="table top_20" id="table_position">
                 <thead>
                 <tr>
-                    <th>Position</th>
-                    <th> </th>
+                    <th>Position Name</th>
+                    <th>Company</th>
                     <th>Location</th>
                     <th>Publish Date</th>
                     <th> </th>
@@ -62,13 +67,11 @@
                     <td id="pos_date">Publish Date</td>
                     <td class="admin_pos_func_td">
                         <button type="button" class="btn btn-primary" id="admin_pos_btn_detail">See Details</button>
-                        <button type="button" class="btn btn-default" id="admin_pos_btn_delete">Delete</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
             <p id="admin_pos_all_error">Fail to load positions.</p>
-
 
 
 
