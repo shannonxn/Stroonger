@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="adminAll.js"></script>
+
+    <script src="adminHeadhunterDetail.js"></script>
+    <link href="adminHeadhunterDetail.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 admin_banner">
+            <p>Stroonger</p>
+        </div>
+    </div>
+    <div class="row" id="user_heading">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_position">Position</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_candidate">Candidate</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_headhunter">Headhunter</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_achievement">Achievement</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_noti">Notification</button>
+        </div>
+
+        <div class="col-md-10">
+            <h2 class="form-signin-heading bottom_20">User Info</h2>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle" id="adminEmail">Email Address</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="email"></p>
+                        <input type="text" class="form-control text_edit" id="edit_email" placeholder="Email Address">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">First Name</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="fn"></p>
+                        <input type="text" class="form-control text_edit" id="edit_fn" placeholder="First Name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">Last Name</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="ln"></p>
+                        <input type="text" class="form-control text_edit" id="edit_ln" placeholder="Last Name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">Gender</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="gender"></p>
+                        <input type="text" class="form-control text_edit" id="edit_gender" placeholder="Gender">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">Age</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="age"></p>
+                        <input type="text" class="form-control text_edit" id="edit_age" placeholder="Age">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">Country</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="country"></p>
+                        <input type="text" class="form-control text_edit" id="edit_country" placeholder="Country">
+                    </td>
+                </tr><tr>
+                    <td>
+                        <p class="text_adminSubTitle">State</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="state"></p>
+                        <input type="text" class="form-control text_edit" id="edit_state" placeholder="State">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">City</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="city"></p>
+                        <input type="text" class="form-control text_edit" id="edit_city" placeholder="City">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">Zip Code</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="zip"></p>
+                        <input type="text" class="form-control text_edit" id="edit_zip" placeholder="Zip Code">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">Mobile</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="mobile"></p>
+                        <input type="text" class="form-control text_edit" id="edit_mobile" placeholder="Mobile">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">Bank Account</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="bankaccount"></p>
+                        <input type="text" class="form-control text_edit" id="edit_bankaccount" placeholder="Bank Account">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text_adminSubTitle">Route Number</p>
+                    </td>
+                    <td>
+                        <p class="text_adminContent" id="routenumber"></p>
+                        <input type="text" class="form-control text_edit" id="edit_routenumber" placeholder="Route Number">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button class="btn btn-primary" id="return_button">Reture</button>
+
+            <p id="edit_error">Fail to edit information.</p>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+</body>
+
+
+</body>
+</html>

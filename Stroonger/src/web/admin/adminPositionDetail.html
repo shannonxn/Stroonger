@@ -28,6 +28,9 @@
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
             <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_position">Position</button>
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_candidate">Candidate</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_headhunter">Headhunter</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_achievement">Achievement</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_noti">Notification</button>
         </div>
 
         <div class="col-md-10">
@@ -70,6 +73,42 @@
                 <button type="button" class="btn btn-default" id="admin_com_edit_cancel">Cancel</button>
                 <p id="admin_company_edit_error">Fail to edit information.</p>
             </form>
+
+
+            <h3 class="form-signin-heading bottom_20">Application</h3>
+
+            <table class="table" id="table_app">
+                <thead>
+                <tr>
+                    <th class="col-md-2">Name</th>
+                    <th class="col-md-4">Resume Link</th>
+                    <th class="col-md-2">Headhunter</th>
+                    <th class="col-md-2">Date</th>
+                    <th class="col-md-2">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="app_row">
+                    <td class="col-md-2">
+                        <p class="resume_text_name" id="app_name">Name</p>
+                    </td>
+                    <td class="col-md-4">
+                        <p class="resume_text_link" id="app_resume">Resume</p>
+                    </td>
+                    <td class="col-md-2">
+                        <a><p class="resume_text_link" id="app_hh">Headhunter</p></a>
+                    </td>
+                    <td class="col-md-2">
+                        <p class="resume_text_link" id="app_date">Date</p>
+                    </td>
+                    <td class="col-md-2">
+                        <button type="button" class="btn btn-primary" id="app_applied">Applied</button>
+                        <button type="button" class="btn btn-default" id="app_failed">Failed</button>
+                        <p class="resume_text_link" id="app_status">Status</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
         </div>
     </div>

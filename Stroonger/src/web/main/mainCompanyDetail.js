@@ -9,6 +9,7 @@ $(function() {
     var count = 20;
     var total = -1;
     var sortValue = "";
+    var role = null;
 
     var companyId = null;
 
@@ -23,7 +24,8 @@ $(function() {
 
         adminId = tmpArr[0].substring(tmpArr[0].indexOf("=") + 1, tmpArr[0].length);
         token = tmpArr[1].substring(tmpArr[1].indexOf("=") + 1, tmpArr[1].length);
-        companyId = tmpArr[2].substring(tmpArr[2].indexOf("=") + 1, tmpArr[2].length);
+        role = tmpArr[2].substring(tmpArr[2].indexOf("=") + 1, tmpArr[2].length);
+        companyId = tmpArr[3].substring(tmpArr[3].indexOf("=") + 1, tmpArr[3].length);
         if(tmpArr.length >= 4) {
             posFlag = 1; // go to position page
         }
@@ -117,7 +119,7 @@ $(function() {
                         $("#"+item.id).prop("class","cloned");
                         $("#"+item.id).show();
                         $("#"+item.id).find("#admin_pos_btn_detail").click(function (e) {
-                            $(location).attr('href', 'adminPositionDetail.html?adminId=' + adminId + '&token=' + token + '&positionId=' + item.id);
+                            $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + item.id);
                         });
 
                     });
@@ -150,7 +152,7 @@ $(function() {
                         $("#"+item.id).prop("class","cloned");
                         $("#"+item.id).show();
                         $("#"+item.id).find("#admin_pos_btn_detail").click(function (e) {
-                            $(location).attr('href', 'adminPositionDetail.html?adminId=' + adminId + '&token=' + token + '&positionId=' + item.id);
+                            $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + item.id);
                         });
 
                     });

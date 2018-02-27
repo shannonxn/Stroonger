@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
@@ -15,7 +16,10 @@ import edu.cmu.sv.app17.exceptions.APPUnauthorizedException;
 import edu.cmu.sv.app17.helpers.APPCrypt;
 import edu.cmu.sv.app17.helpers.APPResponse;
 import edu.cmu.sv.app17.helpers.PATCH;
+import edu.cmu.sv.app17.models.Application;
 import edu.cmu.sv.app17.models.Candidate;
+import edu.cmu.sv.app17.models.Notification;
+import edu.cmu.sv.app17.models.Resume;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
@@ -24,6 +28,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Path("candidate")
@@ -31,6 +38,8 @@ public class CandidateInterface {
 
     private MongoCollection<Document> candidateCollection;
     private MongoCollection<Document> resumeCollection;
+    private MongoCollection<Document> applicationCollection;
+    private MongoCollection<Document> notificationCollection;
     private ObjectWriter ow;
 
 
@@ -39,6 +48,8 @@ public class CandidateInterface {
         MongoDatabase database = mongoClient.getDatabase("stroonger");
         this.candidateCollection = database.getCollection("candidate");
         this.resumeCollection = database.getCollection("resume");
+        this.applicationCollection = database.getCollection("application");
+        this.notificationCollection = database.getCollection("notification");
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
     }
 
@@ -126,6 +137,8 @@ public class CandidateInterface {
                 throw new APPBadRequestException(55,"missing field");
             if (!json.has("selfIntroduction"))
                 throw new APPBadRequestException(55,"missing selfIntroduction");
+
+
 
             Document doc = new Document("email", json.getString("email"))
                     .append("password", APPCrypt.encrypt(json.getString("password")))
@@ -278,6 +291,496 @@ public class CandidateInterface {
             throw new APPInternalServerException(0, e.getMessage());
         }
 
+    }
+
+
+    // Done
+    @GET
+    @Path("{id}/resume")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getAllResumeOfCandidate(@Context HttpHeaders headers, @PathParam("id") String id) {
+
+        try {
+            checkAuthentication(headers, id);
+
+            ArrayList<Resume> resumeList = new ArrayList<Resume>();
+            BasicDBObject query = new BasicDBObject();
+            query.put("ownerId", id);
+            FindIterable<Document> results = resumeCollection.find(query);
+
+            for (Document item : results) {
+                String fileLink = item.getString("fileLink");
+                Resume resume = new Resume(
+                        fileLink,
+                        item.getString("versionName"),
+                        item.getString("uploadTime"),
+                        item.getString("ownerId")
+                );
+                resume.setId(item.getObjectId("_id").toString());
+                resumeList.add(resume);
+            }
+            return new APPResponse(resumeList);
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+    }
+
+
+    // Done
+    @GET
+    @Path("{id}/resume/{resid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public APPResponse getOneResume(@Context HttpHeaders headers, @PathParam("id") String id,
+                                    @PathParam("resid") String resid) {
+        try {
+            checkAuthentication(headers,id);
+            BasicDBObject query = new BasicDBObject();
+
+            query.put("_id", new ObjectId(resid));
+            Document item = resumeCollection.find(query).first();
+            if (item == null) {
+                throw new APPNotFoundException(0, "No such resume!");
+            }
+            Resume resume = new Resume(
+                    item.getString("fileLink"),
+                    item.getString("versionName"),
+                    item.getString("uploadTime"),
+                    item.getString("ownerId")
+            );
+            resume.setId(item.getObjectId("_id").toString());
+            return new APPResponse(resume);
+
+        } catch(APPNotFoundException e) {
+            throw new APPNotFoundException(0,"No such resume!");
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch(IllegalArgumentException e) {
+            throw new APPBadRequestException(45,"Doesn't look like MongoDB ID");
+        } catch(Exception e) {
+            throw new APPInternalServerException(99,"Unexpected error");
+        }
+
+    }
+
+
+    // Done
+    @POST
+    @Path("{id}/resume")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse createResumeOfCandidate(@Context HttpHeaders headers, @PathParam("id") String id, Object request) {
+        JSONObject json = null;
+        try {
+            checkAuthentication(headers, id);
+
+            json = new JSONObject(ow.writeValueAsString(request));
+
+            if (!json.has("fileLink"))
+                throw new APPBadRequestException(55,"missing company fileLink");
+            if (!json.has("versionName"))
+                throw new APPBadRequestException(55,"missing company versionName");
+
+
+            FindIterable<Document> results = resumeCollection.find();
+
+            Date now = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
+            String curDate = sdf.format(now);
+
+            Document doc = new Document("fileLink", json.getString("fileLink"))
+                    .append("versionName", json.getString("versionName"))
+                    .append("uploadTime", curDate)
+                    .append("ownerId", id);
+
+            resumeCollection.insertOne(doc);
+            return new APPResponse(request);
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+    }
+
+
+
+    // Done
+    @PATCH
+    @Path("{id}/resume/{resid}")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse updateResumeOfCandidate(@Context HttpHeaders headers, @PathParam("id") String id,
+                                               @PathParam("resid") String resid, Object request) {
+
+        try {
+            checkAuthentication(headers, id);
+
+            JSONObject json = null;
+            json = new JSONObject(ow.writeValueAsString(request));
+
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(resid));
+            query.put("ownerId", new ObjectId(id));
+
+            int errorFlag = 0;
+
+            Document doc = new Document();
+            if (json.has("fileLink")) {
+                doc.append("fileLink",json.getString("fileLink"));
+                errorFlag = 1;
+            }
+            if (json.has("versionName")) {
+                doc.append("versionName",json.getString("versionName"));
+                errorFlag = 1;
+            }
+
+            if(errorFlag == 0) {
+                throw new APPBadRequestException(55,"The properties you want to update are wrong.");
+            }
+
+            Document set = new Document("$set", doc);
+            resumeCollection.updateOne(query,set);
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+        return new APPResponse();
+    }
+
+
+    // Done
+    @DELETE
+    @Path("{id}/resume/{resid}")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse deletePositionOfCompany(@Context HttpHeaders headers,
+                                               @PathParam("id") String id,
+                                               @PathParam("resid") String resid) {
+
+        try {
+            checkAuthentication(headers, id);
+
+            BasicDBObject query = new BasicDBObject();
+            query.put("ownerId", id);
+            query.put("_id", new ObjectId(resid));
+
+            DeleteResult deleteResult = resumeCollection.deleteOne(query);
+
+            if (deleteResult.getDeletedCount() < 1)
+                throw new APPNotFoundException(66,"Could not delete");
+
+            return new APPResponse();
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+    }
+
+
+
+    // Done
+    @POST
+    @Path("{id}/application")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse createAppOfCandidate(@Context HttpHeaders headers, @PathParam("id") String id, Object request) {
+        JSONObject json = null;
+        try {
+            checkAuthentication(headers, id);
+
+            json = new JSONObject(ow.writeValueAsString(request));
+
+            FindIterable<Document> application = applicationCollection.find();
+
+            Date now = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
+            String curDate = sdf.format(now);
+
+            Document doc = new Document("companyId", json.getString("companyId"))
+                    .append("positionId", json.getString("positionId"))
+                    .append("userId", id)
+                    .append("resumeId", json.getString("resumeId"))
+                    .append("userFN", json.getString("userFN"))
+                    .append("userLN", json.getString("userLN"))
+                    .append("posName", json.getString("posName"))
+                    .append("comName", json.getString("comName"))
+                    .append("applyDate", curDate)
+                    .append("statue", "In Progress")
+                    .append("isHeadhunter", false);
+
+            applicationCollection.insertOne(doc);
+            return new APPResponse(request);
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+    }
+
+
+    // Done
+    @GET
+    @Path("{id}/application")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getAllAppOfCandidate(@Context HttpHeaders headers, @PathParam("id") String id) {
+
+        try {
+            checkAuthentication(headers, id);
+
+            ArrayList<Application> applicationList = new ArrayList<Application>();
+            BasicDBObject query = new BasicDBObject();
+            query.put("userId", id);
+            FindIterable<Document> results = applicationCollection.find(query);
+
+            for (Document item : results) {
+                String companyId = item.getString("companyId");
+                Application application = new Application(
+                        companyId,
+                        item.getString("positionId"),
+                        item.getString("userId"),
+                        item.getString("resumeId"),
+                        item.getString("userFN"),
+                        item.getString("userLN"),
+                        item.getString("posName"),
+                        item.getString("comName"),
+                        item.getString("applyDate"),
+                        item.getString("statue"),
+                        item.getBoolean("isHeadhunter")
+                );
+                application.setId(item.getObjectId("_id").toString());
+                applicationList.add(application);
+            }
+            return new APPResponse(applicationList);
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+    }
+
+
+    // Done
+    @GET
+    @Path("{id}/application/{appid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public APPResponse getOneApp(@Context HttpHeaders headers, @PathParam("id") String id,
+                                 @PathParam("appid") String appid) {
+        try {
+            checkAuthentication(headers,id);
+            BasicDBObject query = new BasicDBObject();
+
+            query.put("_id", new ObjectId(appid));
+            Document item = applicationCollection.find(query).first();
+            if (item == null) {
+                throw new APPNotFoundException(0, "No such Application!");
+            }
+            Application application = new Application(
+                    item.getString("companyId"),
+                    item.getString("positionId"),
+                    item.getString("userId"),
+                    item.getString("resumeId"),
+                    item.getString("userFN"),
+                    item.getString("userLN"),
+                    item.getString("posName"),
+                    item.getString("comName"),
+                    item.getString("applyDate"),
+                    item.getString("statue"),
+                    item.getBoolean("isHeadhunter")
+            );
+            application.setId(item.getObjectId("_id").toString());
+            return new APPResponse(application);
+
+        } catch(APPNotFoundException e) {
+            throw new APPNotFoundException(0,"No such application!");
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch(IllegalArgumentException e) {
+            throw new APPBadRequestException(45,"Doesn't look like MongoDB ID");
+        } catch(Exception e) {
+            throw new APPInternalServerException(99,"Unexpected error");
+        }
+
+    }
+
+
+
+    // Done
+    @POST
+    @Path("{id}/notification")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse createNotification(@Context HttpHeaders headers, @PathParam("id") String id, Object request) {
+        JSONObject json = null;
+        try {
+            checkAuthentication(headers, id);
+
+            json = new JSONObject(ow.writeValueAsString(request));
+
+            FindIterable<Document> notification = notificationCollection.find();
+
+            Date now = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
+            String curDate = sdf.format(now);
+
+            Document doc = new Document("fromId", id)
+                    .append("toId", "admin")
+                    .append("title", json.getString("title"))
+                    .append("content", json.getString("content"))
+                    .append("date", curDate)
+                    .append("hasRead", false);
+
+            notificationCollection.insertOne(doc);
+            return new APPResponse(request);
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+    }
+
+
+
+    // Done
+    @GET
+    @Path("{id}/notification")
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse getAllNotification(@Context HttpHeaders headers, @PathParam("id") String id) {
+
+        try {
+            checkAuthentication(headers, id);
+
+            ArrayList<Notification> notificationList = new ArrayList<Notification>();
+            BasicDBObject query = new BasicDBObject();
+            query.put("toId", id);
+            FindIterable<Document> results = notificationCollection.find(query);
+
+            for (Document item : results) {
+                String fromId = item.getString("fromId");
+                Notification notification = new Notification(
+                        fromId,
+                        item.getString("toId"),
+                        item.getString("title"),
+                        item.getString("content"),
+                        item.getString("date"),
+                        item.getBoolean("hasRead")
+                );
+                notification.setId(item.getObjectId("_id").toString());
+                notificationList.add(notification);
+            }
+            return new APPResponse(notificationList);
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+    }
+
+
+
+    // Done
+    @GET
+    @Path("{id}/notification/{noid}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public APPResponse getOneNoti(@Context HttpHeaders headers, @PathParam("id") String id,
+                                  @PathParam("noid") String noid) {
+        try {
+            checkAuthentication(headers,id);
+            BasicDBObject query = new BasicDBObject();
+
+            query.put("_id", new ObjectId(noid));
+            Document item = notificationCollection.find(query).first();
+            if (item == null) {
+                throw new APPNotFoundException(0, "No such Notification!");
+            }
+            Notification notification = new Notification(
+                    item.getString("fromId"),
+                    item.getString("toId"),
+                    item.getString("title"),
+                    item.getString("content"),
+                    item.getString("date"),
+                    item.getBoolean("hasRead")
+            );
+            notification.setId(item.getObjectId("_id").toString());
+            return new APPResponse(notification);
+
+        } catch(APPNotFoundException e) {
+            throw new APPNotFoundException(0,"No such application!");
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch(IllegalArgumentException e) {
+            throw new APPBadRequestException(45,"Doesn't look like MongoDB ID");
+        } catch(Exception e) {
+            throw new APPInternalServerException(99,"Unexpected error");
+        }
+
+    }
+
+
+
+    // Done
+    @PATCH
+    @Path("{id}/notification/{noid}")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public APPResponse updateNotification(@Context HttpHeaders headers, @PathParam("id") String id,
+                                          @PathParam("noid") String noid) {
+
+        try {
+            checkAuthentication(headers, id);
+
+            BasicDBObject query = new BasicDBObject();
+            query.put("_id", new ObjectId(noid));
+
+            Document doc = new Document();
+
+            doc.append("hasRead", true);
+
+            Document set = new Document("$set", doc);
+            notificationCollection.updateOne(query,set);
+
+        } catch (JsonProcessingException e) {
+            throw new APPBadRequestException(33, e.getMessage());
+        } catch(APPUnauthorizedException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new APPInternalServerException(0, e.getMessage());
+        }
+
+        return new APPResponse();
     }
 
 

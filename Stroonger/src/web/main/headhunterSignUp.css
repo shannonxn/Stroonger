@@ -1,0 +1,55 @@
+#headhunterEmailError {
+    display: none;
+}
+#headhunterPasswordError {
+    display: none;
+}
+#headhunterConfirmPasswordError {
+    display: none;
+}
+#headhunterFirstNameError {
+    display: none;
+}
+#headhunterLastNameError {
+    display: none;
+}
+
+#headhunterGenderError {
+    display: none;
+}
+
+#headhunterAgeError {
+    display: none;
+}
+
+#headhunterCountryError {
+    display: none;
+}
+
+#headhunterStateError {
+    display: none;
+}
+
+#headhunterCityError{
+    display: none;
+}
+
+#headhunterZipcodeError {
+    display: none;
+}
+
+#headhunterMobileError {
+    display: none;
+}
+
+#headhunterBankAccountError {
+    display: none;
+}
+
+#headhunterRouteNumberError {
+    display: none;
+}
+
+#headhunterSignupError {
+    display: none;
+}

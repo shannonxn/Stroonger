@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="mainAll.js"></script>
+
+    <script src="mainCandidateApply.js"></script>
+    <link href="mainCandidateApply.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 admin_banner">
+            <p>Stroonger</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Account</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_position">Position</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_achievement">Achievement</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_noti">Notification</button>
+        </div>
+
+        <div class="col-md-10">
+            <h3>Application Information</h3>
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <p class="text_adminSubTitle" id="apply_com">Company Name</p>
+                    </td>
+                    <td class="col-md-9">
+                        <p class="text_adminContent" id="apply_com_con"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-3">
+                        <p class="text_adminSubTitle" id="apply_pos">Position Name</p>
+                    </td>
+                    <td class="col-md-9">
+                        <p class="text_adminContent" id="apply_pos_con"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-3">
+                        <p class="text_adminSubTitle" id="apply_fn">First Name</p>
+                    </td>
+                    <td class="col-md-9">
+                        <p class="text_adminContent" id="apply_fn_con"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-3">
+                        <p class="text_adminSubTitle" id="apply_ln">Last Name</p>
+                    </td>
+                    <td class="col-md-9">
+                        <p class="text_adminContent" id="apply_ln_con"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-3">
+                        <p class="text_adminSubTitle" id="apply_re">Resume</p>
+                    </td>
+                    <td class="col-md-9">
+                        <p class="text_adminContent" id="apply_re_con"></p>
+
+                        <table class="table" id="table_resume">
+                            <tbody>
+                            <tr>
+                                <td class="col-md-2" id="resume_add_td">
+                                    <button class="btn btn-primary" id="add_resume">Add</button>
+                                </td>
+                                <td class="col-md-3">
+                                    <input type="text" class="form-control" id="edit_resume_name" placeholder="Name">
+                                    <p id="error_resume_name">Can not be empty.</p>
+                                </td>
+                                <td class="col-md-7">
+                                    <input type="text" class="form-control" id="edit_resume_link" placeholder="Google Drive Link">
+                                    <p id="error_resume_link">Can not be empty.</p>
+                                </td>
+                            </tr>
+                            <tr id="resume_row">
+                                <td class="col-md-2">
+                                    <input type="radio" name="resume" id="resume_radio" checked>
+                                </td>
+                                <td class="col-md-3">
+                                    <p class="resume_text_name" id="resume_text_name">Name</p>
+                                </td>
+                                <td class="col-md-7">
+                                    <p class="resume_text_link" id="resume_text_link">Google Drive Link</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button type="button" class="btn btn-primary" id="apply_now">Apply Now</button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

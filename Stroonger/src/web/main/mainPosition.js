@@ -7,6 +7,8 @@ $(function() {
     var total = -1;
     var sortValue = "";
 
+    var role = null;
+
     var searchVal = "";
 
     var URL = document.location.toString();
@@ -18,6 +20,7 @@ $(function() {
 
         adminId = tmpArr[0].substring(tmpArr[0].indexOf("=") + 1, tmpArr[0].length);
         token = tmpArr[1].substring(tmpArr[1].indexOf("=") + 1, tmpArr[1].length);
+        role = tmpArr[2].substring(tmpArr[2].indexOf("=") + 1, tmpArr[2].length);
     } else {
         QueryString = "";
     }
@@ -83,7 +86,7 @@ $(function() {
                     $("#"+item.id).prop("class","cloned");
                     $("#"+item.id).show();
                     $("#"+item.id).find("#admin_pos_btn_detail").click(function (e) {
-                        $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&positionId=' + item.id);
+                        $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + item.id);
                     });
 
                 });
@@ -122,7 +125,7 @@ $(function() {
                             $("#" + item.id).prop("class", "cloned");
                             $("#" + item.id).show();
                             $("#" + item.id).find("#admin_pos_btn_detail").click(function (e) {
-                                $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&positionId=' + item.id);
+                                $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + item.id);
                             });
 
                         });
@@ -155,7 +158,7 @@ $(function() {
                             $("#" + item.id).prop("class", "cloned");
                             $("#" + item.id).show();
                             $("#" + item.id).find("#admin_pos_btn_detail").click(function (e) {
-                                $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&positionId=' + item.id);
+                                $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + item.id);
                             });
 
                         });
@@ -191,7 +194,7 @@ $(function() {
                             $("#" + item.id).prop("class", "cloned");
                             $("#" + item.id).show();
                             $("#" + item.id).find("#admin_pos_btn_detail").click(function (e) {
-                                $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&positionId=' + item.id);
+                                $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + item.id);
                             });
 
                         });
@@ -224,7 +227,7 @@ $(function() {
                             $("#" + item.id).prop("class", "cloned");
                             $("#" + item.id).show();
                             $("#" + item.id).find("#admin_pos_btn_detail").click(function (e) {
-                                $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&positionId=' + item.id);
+                                $(location).attr('href', 'mainPositionDetail.html?adminId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + item.id);
                             });
 
                         });

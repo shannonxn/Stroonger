@@ -27,24 +27,47 @@ $(function() {
 
         e.preventDefault();
 
-        jQuery.ajax ({
-            url: "/api/adminSession",
-            type: "POST",
-            data: JSON.stringify({
-                email:inputEmail,
-                password:inputPassword
-            }),
-            dataType: "json",
-            contentType: "application/json; charset=utf-8"
-        })
-            .done(function(data){
-                token = data.content.token;
-                adminId = data.content.adminId;
-                $(location).attr('href', 'adminHome.html?adminId=' + adminId + '&token=' + token);
+        if(inputEmail !== "stroonger@gmail.com") {
+            jQuery.ajax ({
+                url: "/api/adminSession",
+                type: "POST",
+                data: JSON.stringify({
+                    email:inputEmail,
+                    password:inputPassword
+                }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8"
             })
-            .fail(function(data){
-                $("#adminSigninError").css("display", "block");
+                .done(function(data){
+                    token = data.content.token;
+                    adminId = data.content.adminId;
+                    $(location).attr('href', 'adminHome.html?adminId=' + adminId + '&token=' + token);
+                })
+                .fail(function(data){
+                    $("#adminSigninError").css("display", "block");
+                })
+
+        } else {
+            jQuery.ajax ({
+                url: "/api/adminSession",
+                type: "POST",
+                data: JSON.stringify({
+                    email:inputEmail,
+                    password:inputPassword
+                }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8"
             })
+                .done(function(data){
+                    token = data.content.token;
+                    adminId = data.content.adminId;
+                    $(location).attr('href', 'superAdminHome.html?adminId=' + adminId + '&token=' + token);
+                })
+                .fail(function(data){
+                    $("#adminSigninError").css("display", "block");
+                })
+        }
+
 
     });
 

@@ -10,8 +10,15 @@ $(function() {
     var positionId = null;
     var comId = null;
 
+    var userId = null;
+
+    var comName = null;
+
     var URL = document.location.toString();
     var QueryString, tmpArr, queryParamert;
+
+
+    $("#app_row").hide();
 
     if (URL.lastIndexOf("?") != -1) {
         QueryString = URL.substring(URL.lastIndexOf("?") + 1, URL.length);
@@ -43,8 +50,6 @@ $(function() {
             $("#admin_pos_detail_des").text(posDes);
             $("#admin_pos_detail_date").text(posDate);
 
-            var comName = null;
-
             jQuery.ajax ({
                 url: "/api/company/" + comId,
                 type: "GET",
@@ -65,6 +70,177 @@ $(function() {
             $("#admin_company_detail_des").text("Fail to load details.");
             $("#admin_company_detail_des").css("display", "block");
         });
+
+
+    jQuery.ajax ({
+        url: "/api/admin/" + adminId + "/position/" + positionId + "/application",
+        type: "GET",
+        beforeSend: function(request) {
+            request.setRequestHeader("Authorization", token);
+        },
+        dataType: "json",
+        contentType: "application/json; charset=utf-8"
+    })
+        .done(function(data){
+
+            data.content.forEach(function(item){
+                $( "#app_row" ).clone().prop("id",item.id).appendTo( "#table_app" );
+
+                var name = item.userFN + " " + item.userLN;
+
+                userId = item.userId;
+
+                $("#"+item.id).find("#app_name").text(name);
+
+                jQuery.ajax ({
+                    url: "/api/admin/" + adminId + "/resume/" + item.resumeId,
+                    type: "GET",
+                    beforeSend: function(request) {
+                        request.setRequestHeader("Authorization", token);
+                    },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8"
+                })
+                    .done(function(data){
+                        var link = data.content.fileLink;
+                        $("#"+item.id).find("#app_resume").text(link);
+                    })
+                    .fail(function(data){
+
+                    });
+
+
+                if(item.isHeadhunter === true) {
+                    jQuery.ajax ({
+                        url: "/api/admin/" + adminId + "/headhunter/" + item.userId,
+                        type: "GET",
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", token);
+                        },
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8"
+                    })
+                        .done(function(data){
+                            var hhName = data.content.firstName + " " + data.content.lastName;
+                            $("#"+item.id).find("#app_hh").text(hhName);
+                            $("#"+item.id).find("#app_hh").click(function (e) {
+                                $(location).attr('href', 'adminHeadhunterDetail.html?adminId=' + adminId + '&token=' + token + '&canId=' + item.userId);
+                            });
+                        })
+                        .fail(function(data){
+
+                        });
+                } else {
+                    $("#"+item.id).find("#app_hh").text("None");
+                }
+
+                $("#"+item.id).find("#app_date").text(item.applyDate);
+
+                if(item.statue === "In Progress") {
+                    $("#"+item.id).find("#app_status").hide();
+                    $("#"+item.id).find("#app_applied").show();
+                    $("#"+item.id).find("#app_failed").show();
+                } else {
+                    $("#"+item.id).find("#app_status").show();
+                    $("#"+item.id).find("#app_applied").hide();
+                    $("#"+item.id).find("#app_failed").hide();
+                    $("#"+item.id).find("#app_status").text(item.statue);
+                }
+
+                $("#"+item.id).prop("class","cloned");
+                $("#"+item.id).show();
+
+                $("#"+item.id).find("#app_applied").click(function (e){
+                    jQuery.ajax ({
+                        url: "/api/admin/" + adminId + "/position/" + positionId + "/application/" + item.id,
+                        type: "PATCH",
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", token);
+                        },
+                        dataType: "json",
+                        data: JSON.stringify({
+                            statue: "Applied"
+                        }),
+                        contentType: "application/json; charset=utf-8"
+                    })
+                        .done(function(data){
+
+                            jQuery.ajax ({
+                                url: "/api/admin/" + adminId + "/notification",
+                                type: "POST",
+                                beforeSend: function(request) {
+                                    request.setRequestHeader("Authorization", token);
+                                },
+                                data: JSON.stringify({
+                                    toId: userId,
+                                    title: "Your Application Is Applied",
+                                    content: "Name: " + name + "&" + "Company: " + comName + "&" + "Position: " + posName
+                                }),
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8"
+                            })
+                                .done(function(data) {
+                                    window.location.reload();
+                                })
+                                .fail(function(data){
+
+                                })
+
+                        })
+                        .fail(function(data){
+
+                        });
+                });
+
+
+                $("#"+item.id).find("#app_failed").click(function (e){
+                    jQuery.ajax ({
+                        url: "/api/admin/" + adminId + "/position/" + positionId + "/application/" + item.id,
+                        type: "PATCH",
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", token);
+                        },
+                        dataType: "json",
+                        data: JSON.stringify({
+                            statue: "Failed"
+                        }),
+                        contentType: "application/json; charset=utf-8"
+                    })
+                        .done(function(data){
+
+                            jQuery.ajax ({
+                                url: "/api/admin/" + adminId + "/notification",
+                                type: "POST",
+                                beforeSend: function(request) {
+                                    request.setRequestHeader("Authorization", token);
+                                },
+                                data: JSON.stringify({
+                                    toId: userId,
+                                    title: "Your Application Is Failed To Apply",
+                                    content: "Name: " + name + "&" + "Company: " + comName + "&" + "Position: " + posName
+                                }),
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8"
+                            })
+                                .done(function(data) {
+                                    window.location.reload();
+                                })
+                                .fail(function(data){
+
+                                })
+                        })
+                        .fail(function(data){
+
+                        });
+                });
+
+            });
+
+        })
+        .fail(function(data){
+
+        });
+
 
 
     $("#admin_pos_btn_edit").click(function (e) {

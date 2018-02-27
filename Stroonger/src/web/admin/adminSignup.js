@@ -4,6 +4,7 @@ $(function() {
 
     $("#adminSignUp").click(function (e) {
 
+
         var inputEmail = $("#adminInputEmail").val();
         var inputPassword = $("#adminInputPassword").val();
         var scope = /\w+[@]{1}\w+[.]\w+/;

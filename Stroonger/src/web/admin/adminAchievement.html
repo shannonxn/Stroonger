@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="adminAll.js"></script>
+
+    <script src="adminAchievement.js"></script>
+    <link href="adminAchievement.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 admin_banner">
+            <p>Stroonger Admin System</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_position">Position</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_candidate">Candidate</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_headhunter">Headhunter</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_achievement">Achievement</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_noti">Notification</button>
+        </div>
+
+        <div class="col-md-10">
+
+            <form class="admin_edit_content bottom_40" id="admin_achievement_add_form">
+                <div class="form-group">
+                    <label for="achi_author_edit">Author Name</label>
+                    <input type="text" class="form-control" id="achi_author_edit" placeholder="Author">
+                </div>
+                <div class="form-group">
+                    <label for="achi_com_edit">Company</label>
+                    <input type="text" class="form-control" id="achi_com_edit" placeholder="Company">
+                </div>
+                <div class="form-group">
+                    <label for="achi_content_edit">Content</label>
+                    <textarea  class="form-control text_edit" rows="3"  id="achi_content_edit" placeholder="Content"></textarea>
+                </div>
+
+                <button type="button" class="btn btn-primary" id="admin_ach_add_create">Add New</button>
+                <button type="button" class="btn btn-default" id="admin_ach_add_cancel">Cancel</button>
+            </form>
+
+            <table class="table top_20" id="table_achievement">
+                <thead>
+                <tr>
+                    <th class="col-md-2">Date</th>
+                    <th class="col-md-7">Editor</th>
+                    <th class="col-md-3"> </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="ach_row">
+                    <td class="col-md-2" id="ach_date">Date</td>
+                    <td class="col-md-7" id="ach_editor">Author</td>
+                    <td class="col-md-3 admin_ach_func_td">
+                        <button type="button" class="btn btn-default" id="admin_ach_btn_detail">See Details</button>
+                        <button type="button" class="btn btn-primary" id="admin_ach_btn_delete">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

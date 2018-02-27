@@ -12,8 +12,8 @@ public class APPCrypt {
 
     public static void  main(String argv[]){
         try {
-            String message ="ILoveShannon";
-            System.out.println("Raw message " + message); //admin: F/PZtTgA4k5q/9o6Jzik6w==
+            String message ="stroonger";
+            System.out.println("Raw message " + message); //7gXO4OTF/1Wl4BR0Gt1CUA==
             String enryptedMessage = APPCrypt.encrypt(message);
             System.out.println("Encrypted message: " + enryptedMessage);
             String decryptedMessage = APPCrypt.decrypt(enryptedMessage);

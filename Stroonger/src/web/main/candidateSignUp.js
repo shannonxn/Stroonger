@@ -1,8 +1,14 @@
 $(function() {
     var token = null;
     var userId = null;
+    var role = null;
 
     $("#candidateSignupError").hide();
+
+    $("#iamheadhunter").click(function (e) {
+        $(location).attr('href', 'headhunterSignUp.html');
+    });
+
 
     $("#candidateSignUp").click(function (e) {
 
@@ -183,7 +189,7 @@ $(function() {
                         .done(function(data){
                             token = data.content.token;
                             userId = data.content.userId;
-                            $(location).attr('href', 'candidateHome.html?userId=' + userId + '&token=' + token);
+                            $(location).attr('href', 'candidateHome.html?userId=' + userId + '&token=' + token + '&role=' + "c");
                         })
                         .fail(function(data){
                             $("#candidateSignupError").show();

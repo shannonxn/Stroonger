@@ -7,6 +7,8 @@ $(function() {
     var posDes = null;
     var posDate = null;
 
+    var role = null;
+
     var positionId = null;
     var comId = null;
 
@@ -19,7 +21,8 @@ $(function() {
 
         adminId = tmpArr[0].substring(tmpArr[0].indexOf("=") + 1, tmpArr[0].length);
         token = tmpArr[1].substring(tmpArr[1].indexOf("=") + 1, tmpArr[1].length);
-        positionId = tmpArr[2].substring(tmpArr[2].indexOf("=") + 1, tmpArr[2].length);
+        role = tmpArr[2].substring(tmpArr[2].indexOf("=") + 1, tmpArr[2].length);
+        positionId = tmpArr[3].substring(tmpArr[3].indexOf("=") + 1, tmpArr[3].length);
     } else {
         QueryString = "";
     }
@@ -111,6 +114,17 @@ $(function() {
 
     $("#admin_com_edit_cancel").click(function (e) {
         $("#admin_company_edit_info").css("display", "none");
+    });
+
+
+    $("#apply_pos").click(function (e) {
+
+        if(role === "c") {
+            $(location).attr('href', 'mainCandidateApply.html?userId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + positionId);
+        } else if(role === "h") {
+            $(location).attr('href', 'mainHeadhunterApply.html?userId=' + adminId + '&token=' + token + '&role=' + role + '&positionId=' + positionId);
+        }
+
     });
 
 

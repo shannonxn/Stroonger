@@ -13,3 +13,11 @@
 .bottom_20 {
     margin-bottom: 20px;
 }
+
+#right {
+    text-align: right;
+}
+
+.top_20 {
+    margin-top: 20px;
+}

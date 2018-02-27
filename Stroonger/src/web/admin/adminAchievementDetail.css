@@ -1,0 +1,37 @@
+.admin_banner {
+    background-color: cadetblue;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+.admin_banner p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+}
+
+.signin_text {
+    margin-top: 10px;
+}
+
+.page_control {
+    display: inline-block;
+}
+
+.sort_control {
+    display: inline-block;
+    float: right;
+}
+
+#sign_in_form {
+    margin-bottom: 30px;
+}
+
+#table_achievement {
+    margin-top: 20px;
+}
+
+#table_form {
+    margin-bottom: 50px;
+}
+

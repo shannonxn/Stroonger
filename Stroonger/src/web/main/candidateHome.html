@@ -26,9 +26,11 @@
     </div>
     <div class="row" id="user_heading">
         <div class="col-md-2">
-            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_home">Home</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_home">Account</button>
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
             <button type="button" class="btn btn-default btn-block btn_menu" id="menu_position">Position</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_achievement">Achievement</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_noti">Notification</button>
         </div>
         <div class="col-md-10">
             <h2 class="form-signin-heading bottom_20">User Info</h2>
@@ -155,9 +157,81 @@
 
             <button class="btn btn-primary" id="edit_button">Edit Information</button>
             <button class="btn btn-primary" id="save_button">Save Changes</button>
+            <p id="edit_error">Fail to edit information.</p>
+
+
+            <h2 class="form-signin-heading bottom_20 top_20">Resume</h2>
+
+            <table class="table" id="table_resume">
+                <thead>
+                <tr>
+                    <th class="col-md-3">Name</th>
+                    <th class="col-md-6">Google Drive Link</th>
+                    <th class="col-md-3"> </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <input type="text" class="form-control" id="edit_resume_name" placeholder="Name">
+                        <p id="error_resume_name">Can not be empty.</p>
+                    </td>
+                    <td class="col-md-6">
+                        <input type="text" class="form-control" id="edit_resume_link" placeholder="Google Drive Link">
+                        <p id="error_resume_link">Can not be empty.</p>
+                    </td>
+                    <td class="col-md-3" id="resume_add_td">
+                        <button class="btn btn-primary" id="add_resume">Add</button>
+                    </td>
+                </tr>
+                <tr id="resume_row">
+                    <td class="col-md-3">
+                        <p class="resume_text_name" id="resume_text_name">Name</p>
+                    </td>
+                    <td class="col-md-6">
+                        <p class="resume_text_link" id="resume_text_link">Google Drive Link</p>
+                    </td>
+                    <td class="col-md-3" id="right">
+                        <button class="btn btn-default" id="delete_resume">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <h2 class="form-signin-heading bottom_20">Application</h2>
+
+            <table class="table" id="table_app">
+                <thead>
+                <tr>
+                    <th class="col-md-3">Company</th>
+                    <th class="col-md-5">Position</th>
+                    <th class="col-md-2">Date</th>
+                    <th class="col-md-2">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="app_row">
+                    <td class="col-md-3">
+                        <p class="resume_text_name" id="app_com_name">Company</p>
+                    </td>
+                    <td class="col-md-5">
+                        <p class="resume_text_link" id="app_pos_name">Position</p>
+                    </td>
+                    <td class="col-md-2">
+                        <p class="resume_text_link" id="app_date">Date</p>
+                    </td>
+                    <td class="col-md-2">
+                        <p class="resume_text_link" id="app_status">Status</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
             <button class="btn btn-default" id="logout_button">Log Out</button>
 
-            <p id="edit_error">Fail to edit information.</p>
+
 
         </div>
 

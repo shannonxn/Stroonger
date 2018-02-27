@@ -1,0 +1,25 @@
+.signin_text {
+    margin-top: 10px;
+}
+
+.page_control {
+    display: inline-block;
+}
+
+.sort_control {
+    display: inline-block;
+    float: right;
+}
+
+#sign_in_form {
+    margin-bottom: 30px;
+}
+
+#table_headhunter {
+    margin-top: 20px;
+}
+
+#table_form {
+    margin-bottom: 50px;
+}
+

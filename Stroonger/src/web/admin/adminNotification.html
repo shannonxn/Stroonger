@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="adminAll.js"></script>
+
+    <script src="adminNotification.js"></script>
+    <link href="adminNotification.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 admin_banner">
+            <p>Stroonger Admin System</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_home">Home</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_company">Company</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_position">Position</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_candidate">Candidate</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_headhunter">Headhunter</button>
+            <button type="button" class="btn btn-default btn-block btn_menu" id="menu_achievement">Achievement</button>
+            <button type="button" class="btn btn-default btn-block btn_menu active" id="menu_noti">Notification</button>
+        </div>
+
+        <div class="col-md-10">
+
+            <h3 class="bottom_20">Notifications</h3>
+
+            <table class="table" id="table_noti">
+                <tbody>
+                <tr id="noti_row">
+                    <td id="noti">
+                        <h5 id="noti_title">New Application</h5>
+                        <div id="noti_new"></div>
+                        <p id="noti_date"></p>
+                        <p id="noti_name"></p>
+                        <p id="noti_com"></p>
+                        <p id="noti_pos"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

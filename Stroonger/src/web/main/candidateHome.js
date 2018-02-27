@@ -23,6 +23,13 @@ $(function() {
     var field = null;
     var selfIntroduction = null;
 
+    $("#resume_row").hide();
+    $("#app_row").hide();
+    $("#error_resume_name").hide();
+    $("#error_resume_link").hide();
+
+
+
     var URL = document.location.toString();
     var QueryString, tmpArr, queryParamert;
 
@@ -78,6 +85,77 @@ $(function() {
             $("#title").text(currentTitle);
             $("#field").text(field);
             $("#intro").text(selfIntroduction);
+        })
+        .fail(function(data){
+
+        });
+
+
+    jQuery.ajax ({
+        url: "/api/candidate/" + userId + "/resume/",
+        type: "GET",
+        beforeSend: function(request) {
+            request.setRequestHeader("Authorization", token);
+        },
+        dataType: "json",
+        contentType: "application/json; charset=utf-8"
+    })
+        .done(function(data){
+
+            data.content.forEach(function(item){
+                $( "#resume_row" ).clone().prop("id",item.id).appendTo( "#table_resume" );
+                $("#"+item.id).find("#resume_text_name").text(item.versionName);
+                $("#"+item.id).find("#resume_text_link").text(item.fileLink);
+                $("#"+item.id).prop("class","cloned");
+                $("#"+item.id).show();
+                $("#"+item.id).find("#delete_resume").click(function (e) {
+                    jQuery.ajax ({
+                        url: "/api/candidate/" + userId + "/resume/" + item.id,
+                        type: "DELETE",
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", token);
+                        },
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8"
+                    })
+                        .done(function(data){
+                            alert("Delete the resume successfully!");
+                            window.location.reload();
+                        })
+                        .fail(function(data){
+                        });
+                });
+
+            });
+
+        })
+        .fail(function(data){
+
+        });
+
+
+
+    jQuery.ajax ({
+        url: "/api/candidate/" + userId + "/application/",
+        type: "GET",
+        beforeSend: function(request) {
+            request.setRequestHeader("Authorization", token);
+        },
+        dataType: "json",
+        contentType: "application/json; charset=utf-8"
+    })
+        .done(function(data){
+
+            data.content.forEach(function(item){
+                $( "#app_row" ).clone().prop("id",item.id).appendTo( "#table_app" );
+                $("#"+item.id).find("#app_com_name").text(item.comName);
+                $("#"+item.id).find("#app_pos_name").text(item.posName);
+                $("#"+item.id).find("#app_date").text(item.applyDate);
+                $("#"+item.id).find("#app_status").text(item.statue);
+                $("#"+item.id).prop("class","cloned");
+                $("#"+item.id).show();
+            });
+
         })
         .fail(function(data){
 
@@ -162,6 +240,57 @@ $(function() {
     $("#logout_button").click(function (e) {
         $(location).attr('href', '../');
     });
+
+    $("#add_resume").click(function (e) {
+        var new_resume_name = $("#edit_resume_name").val();
+        var new_resume_link = $("#edit_resume_link").val();
+        var flag = 0;
+
+        if(new_resume_name === "") {
+            $("#error_resume_name").show();
+        } else {
+            $("#error_resume_link").hide();
+            flag++;
+        }
+
+        if(new_resume_link === "") {
+            $("#error_resume_link").show();
+        } else {
+            $("#error_resume_link").hide();
+            flag++;
+        }
+
+        // alert(flag);
+
+        if(flag >= 2) {
+            jQuery.ajax ({
+                url: "/api/candidate/" + userId + "/resume/",
+                type: "POST",
+                beforeSend: function(request) {
+                    request.setRequestHeader("Authorization", token);
+                },
+                data: JSON.stringify({
+                    versionName: new_resume_name,
+                    fileLink: new_resume_link
+                }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8"
+            })
+                .done(function(data) {
+                    alert("Add the resume successfully!");
+                    window.location.reload();
+                })
+                .fail(function(data){
+
+                })
+        }
+
+    });
+
+
+
+
+
 
 
 });

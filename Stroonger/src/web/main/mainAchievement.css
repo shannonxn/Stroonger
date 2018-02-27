@@ -1,0 +1,68 @@
+.admin_banner {
+    background-color: cadetblue;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+.admin_banner p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+}
+
+.admin_ach_func_td {
+    text-align: right;
+}
+
+.admin_ach_add_form {
+    display: none;
+}
+
+.admin_ach_all_error {
+    display: none;
+}
+
+#achNameError {
+    display: none;
+}
+
+#achFieldError {
+    display: none;
+}
+
+#achDescriptionError {
+    display: none;
+}
+
+#achLocationError {
+    display: none;
+}
+
+#admin_ach_add_error {
+    display: none;
+}
+
+.inline_p {
+    display: inline;
+}
+
+.bottom_40 {
+    margin-bottom: 40px;
+}
+
+.bottom_20 {
+    margin-bottom: 20px;
+}
+
+.top_20 {
+    margin-top: 20px;
+}
+
+.top_40 {
+    margin-top: 40px;
+}
+
+
+#searchCom {
+    width: 100%;
+}

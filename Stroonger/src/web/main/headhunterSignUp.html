@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="headhunterSignUp.js"></script>
+    <link href="headhunterSignUp.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4" id="register_form">
+
+
+            <form class="form-register">
+                <h2 class="form-register-heading">Sign up</h2>
+
+                <button type="button" class="btn btn-default" id="iamcandidate">I am Candidate</button>
+                <button type="button" class="btn btn-default active" id="iamheadhunter">I am Headhunter</button>
+
+                <p> </p>
+                <div class="form-group">
+                    <label for="inputEmail">Email address</label>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="name@email.com">
+                    <p id="headhunterEmailError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Enter your password">
+                    <p id="headhunterPasswordError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputConfirmPassword">Password</label>
+                    <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Comfirm your password">
+                    <p id="headhunterConfrimPasswordError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputFirstName">FirstName</label>
+                    <input type="text" id="inputFirstName" class="form-control" placeholder="FirstName">
+                    <p id="headhunterFirstNameError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputLastName">LastName</label>
+                    <input type="text" id="inputLastName" class="form-control" placeholder="LastName">
+                    <p id="headhunterLastNameError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputGender">Gender</label>
+                    <input type="text" id="inputGender" class="form-control" placeholder="Gender">
+                    <p id="headhunterGenderError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputAge">Age</label>
+                    <input type="text" id="inputAge" class="form-control" placeholder="Age">
+                    <p id="headhunterAgeError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCountry">Country</label>
+                    <input type="text" id="inputCountry" class="form-control" placeholder="Country">
+                    <p id="headhunterCountryError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputState">State</label>
+                    <input type="text" id="inputState" class="form-control" placeholder="State">
+                    <p id="headhunterStateError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCity">City</label>
+                    <input type="text" id="inputCity" class="form-control" placeholder="City">
+                    <p id="headhunterCityError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputZipcode">Zip Code</label>
+                    <input type="text" id="inputZipcode" class="form-control" placeholder="Zip Code">
+                    <p id="headhunterZipcodeError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputMobile">Mobile</label>
+                    <input type="text" id="inputMobile" class="form-control" placeholder="Mobile">
+                    <p id="headhunterMobileError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputBankAccount">Bank Account</label>
+                    <input type="text" id="inputBankAccount" class="form-control" placeholder="Bank Account">
+                    <p id="headhunterBankAccountError">Shouldn't be empty.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputRouteNumber">Route Number</label>
+                    <input type="text" id="inputRouteNumber" class="form-control" placeholder="Route Number">
+                    <p id="headhunterRouteNumberError">Shouldn't be empty.</p>
+                </div>
+
+                <button id="headhunterSignUp" class="btn btn-primary btn-block" type="button">Sign up</button>
+
+                <p id="headhunterSignupError">Fail to sign up.</p>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

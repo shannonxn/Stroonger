@@ -28,6 +28,15 @@ $(function() {
     $("#menu_candidate").click(function (e) {
         $(location).attr('href', 'adminCandidate.html?adminId=' + adminId + '&token=' + token);
     });
+    $("#menu_headhunter").click(function (e) {
+        $(location).attr('href', 'adminHeadhunter.html?adminId=' + adminId + '&token=' + token);
+    });
+    $("#menu_noti").click(function (e) {
+        $(location).attr('href', 'adminNotification.html?adminId=' + adminId + '&token=' + token);
+    });
+    $("#menu_achievement").click(function (e) {
+        $(location).attr('href', 'adminAchievement.html?adminId=' + adminId + '&token=' + token);
+    });
 
 
 

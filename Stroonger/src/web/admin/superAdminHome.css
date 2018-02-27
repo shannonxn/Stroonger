@@ -1,0 +1,75 @@
+.admin_banner {
+    background-color: cadetblue;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+.admin_banner p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+}
+
+.inline_p {
+    display: inline;
+}
+
+.bottom_20 {
+    margin-bottom: 20px;
+}
+
+.top_20 {
+    margin-top: 20px;
+}
+
+.top_40 {
+    margin-top: 40px;
+}
+
+.admin_pos_func_td {
+    text-align: right;
+}
+
+#posNameError {
+    display: none;
+}
+
+#posFieldError {
+    display: none;
+}
+
+#posDescriptionError {
+    display: none;
+}
+
+#posLocationError {
+    display: none;
+}
+
+#admin_pos_add_error {
+    display: none;
+}
+
+#admin_pos_all_error {
+    display: none;
+}
+
+#admin_company_detail_div_pos {
+    display: none;
+}
+
+#admin_company_edit_error {
+    display: none;
+}
+
+#admin_company_edit_info {
+    display: none;
+}
+
+#admin_company_detail_add_pos_orm {
+    display: none;
+}
+
+.sort_control {
+    float: right;
+}
