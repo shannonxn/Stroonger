@@ -1,81 +1,33 @@
 # Stroonger
 
-## Milestone 3: Admin, Company and Position
+------ Technique and Tool:<br>
+Java<br>
+JavaScript<br>
+Node.js<br>
+AJAX<br>
+REST API<br>
+MongoDB<br>
+Tomcat<br>
+Bootstrap<br>
 
-### Models
-Admin.class</br>
-AdminSession.class</br>
-Comapny.class</br>
-Position.class</br>
-Candidate.class</br>
-CandidateSession.class</br>
+------ Resources:<br>
+Headhunter<br>
+Candidate<br>
+Company<br>
+Position<br>
+Resume<br>
+ApplicationResume<br>
+Message<br>
+Achievement<br>
+Admin<br>
+Super Admin<br>
 
-### REST
-#### AdminInterface.class:
-POST createAdmin
+------ Features:<br>
+Candidate/Headhunter can find dream position on Stroonger;<br>
+Candidate users can apply for the position and headhunter users can recommend candidates for the position;<br>
+Admin can review and manage all users, companies, and applications;<br>
+Candidate users can get feedback and headhunter users can get commission for successful application and recommendation.<br>
 
-#### AdminSessionInterface:
-POST createAdminSession: 
-> emailAddress, password</br>
-> adminToken, fN, lN, email
-
-#### CompanyInterface.class:
-POST createCompany:
-> Admin Token Authentication
-
-GET getAllCompany: 
-> @QueryParam("search by company name/field")</br>
-> @QueryParam("sort by company name/date")</br>
-> @QueryParam("count")</br>
-> @QueryParam("offset")
-
-GET getCompanyById: 
-> @PathParam("company id")
-
-PATCH updateCompany:
-> @PathParam("company id")</br>
-> Admin Token Authentication
-
-DELETE deleteCompany:
-> @PathParam("company id")</br>
-> Admin Token Authentication
-
-POST addPositionToCompany:
-> @PathParam("company id")</br>
-> Admin Token Authentication
-
-GET getAllPositionOfCompany:
-> @PathParam("company id")</br>
-> @QueryParam("search by position name/type")</br>
-> @QueryParam("sort by position name/date")</br>
-> @QueryParam("count")</br>
-> @QueryParam("offset")
-
-GET getPositionOfCompanyById: 
-> @PathParam("company id")
-
-PATCH updatePositionOfCompany:
-> @PathParam("position id")</br>
-> Admin Token Authentication
-
-DELETE deletePositionOfCompany:
-> @PathParam("position id")</br>
-> Admin Token Authentication
-
-#### PositionInterface.class:
-
-GET getAllPosition: 
-> @QueryParam("search by position name/type")</br>
-> @QueryParam("sort by position name/date")</br>
-> @QueryParam("count")</br>
-> @QueryParam("offset")
-
-GET getPositionById: 
-> @PathParam("position id")
-
-#### CandidateInterface.class:
-
-#### CandidateSession.class:
 
 
 
